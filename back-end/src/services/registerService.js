@@ -18,9 +18,8 @@ const createUser = async (user) => {
   if (result) return { code: 409, message: 'User already exists' };
 
   // cria o novo usuário no banco de dados
-  const createdUser = await User.create({ name, email, password: md5(password), role });
+  await User.create({ name, email, password: md5(password), role });
   return { code: 201, message: 'Successfully created' };
 };
 
 module.exports = { createUser };
-
