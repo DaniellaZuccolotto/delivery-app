@@ -31,14 +31,14 @@ function Login() {
 
   const requestUser = async () => {
     try {
-      const result = await axios({
-        method: 'post',
+      const result = await fetch({
+        method: 'POST',
         url: 'http://localhost:3001/login',
         data: {
           email: 'fulana@deliveryapp.com',
           password: 'fulana@123',
         },
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        credentials: 'same-origin',
       });
       console.log(result);
     } catch (error) {
