@@ -4,7 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import DeliveryContext from '../provider/DeliveryContext';
 
 function Login() {
-  const { loginData, setLoginData } = useContext(DeliveryContext);
+  const { loginData, setLoginData,
+    displayParagrafo, setDisplay } = useContext(DeliveryContext);
   const { email, password } = loginData;
   const history = useNavigate();
   const { pathname } = useLocation();
@@ -30,29 +31,19 @@ function Login() {
   };
 
   const requestUser = async () => {
+    const payload = { email, password };
     try {
-    const payload = { email: 'fulana@deliveryapp.com', password: 'fulana@123' }
-    
-    //  const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*' },
-    //     body: { 'json': JSON.stringify({ email: 'fulana@deliveryapp.com', password: 'fulana@123' })},
-    //     mode: 'no-cors'
-    // };
-    // const response = await fetch('http://localhost:3001/login', requestOptions);
-    // console.log(response)
-    // const data = await response.json();
-    //   console.log(data);
-    //   return data;
-    const instance = axios.create({
-      baseURL: 'http://localhost:3001'
-    })
-   
-    const request = await instance.post('/login', JSON.stringify(payload));
-    console.log(request)
+      const URL = 'http://localhost:3001/login';
+      const response = await axios.post(
+        URL,
+        payload,
+      );
 
+      setDisplay(false);
+      return response.data;
     } catch (error) {
       console.log(error);
+      setDisplay(true);
     }
   };
 
@@ -94,12 +85,13 @@ function Login() {
         >
           LOGIN
         </button>
-        <p
-          data-testid="common_login__element-invalid-email"
-          style={ { display: 'none' } }
-        >
-          Usuário inválido
-        </p>
+        { displayParagrafo
+        && (
+          <p
+            data-testid="common_login__element-invalid-email"
+          >
+            Usuário inválido
+          </p>)}
         <button
           type="submit"
           data-testid="common_login__button-register"

@@ -8,13 +8,17 @@ function DeliveryContextProvider({ children }) {
     email: '',
     password: '',
   });
+
+  const [displayParagrafo, setDisplay] = useState(false);
   // const history = useHistory();
   // const path = history.location.pathname;
 
   const contextValue = useMemo(() => ({
     loginData,
+    displayParagrafo,
     setLoginData,
-  }), [loginData]);
+    setDisplay,
+  }), [loginData, displayParagrafo]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>
