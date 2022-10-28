@@ -53,5 +53,9 @@
       "__TESTDESC__": true,
       "__TESTFILE__": true
     }
+  },
+  "dependencies": {
+    "joi": "^17.6.4",
+    "react-router-dom": "^6.4.2"
   }
 }
