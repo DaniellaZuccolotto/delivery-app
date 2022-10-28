@@ -25,22 +25,32 @@ function Login() {
   const disabledBtn = () => {
     const validateEmail = /^[\w+.]+@\w+\.\w{2,}/;
     const PASSWORD_LENGTH = 6;
-    console.log(validateEmail.test(email) && password.length > PASSWORD_LENGTH);
+    // console.log(validateEmail.test(email) && password.length > PASSWORD_LENGTH);
     return (validateEmail.test(email) && password.length >= PASSWORD_LENGTH);
   };
 
   const requestUser = async () => {
     try {
-      const result = await fetch({
-        method: 'POST',
-        url: 'http://localhost:3001/login',
-        data: {
-          email: 'fulana@deliveryapp.com',
-          password: 'fulana@123',
-        },
-        credentials: 'same-origin',
-      });
-      console.log(result);
+    const payload = { email: 'fulana@deliveryapp.com', password: 'fulana@123' }
+    
+    //  const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*' },
+    //     body: { 'json': JSON.stringify({ email: 'fulana@deliveryapp.com', password: 'fulana@123' })},
+    //     mode: 'no-cors'
+    // };
+    // const response = await fetch('http://localhost:3001/login', requestOptions);
+    // console.log(response)
+    // const data = await response.json();
+    //   console.log(data);
+    //   return data;
+    const instance = axios.create({
+      baseURL: 'http://localhost:3001'
+    })
+   
+    const request = await instance.post('/login', JSON.stringify(payload));
+    console.log(request)
+
     } catch (error) {
       console.log(error);
     }
