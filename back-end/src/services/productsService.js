@@ -1,11 +1,10 @@
-const modelProducts = require('../database/models/product');
+const { Product } = require('../database/models');
 
 const getProducts = async () => {
-  const products = await modelProducts.findAll();
+  const products = await Product.findAll();
 
   if (!products) return { code: 404, message: 'products not found' };
-
-  return products;
+  return { code: 200, products };
 };
 
 module.exports = { getProducts };

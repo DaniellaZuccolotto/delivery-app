@@ -1,20 +1,32 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductsCard from '../components/PoductsCard';
-// import DeliveryContext from '../provider/DeliveryContext';
+import DeliveryContext from '../provider/DeliveryContext';
 
 function Products() {
-  // const { loginData, setLoginData,
-  //   displayParagrafo, setDisplay } = useContext(DeliveryContext);
-  // const { email, password } = loginData;
+  const { products, setProducts } = useContext(DeliveryContext);
   const history = useNavigate();
-  // const { pathname } = useLocation();
 
-  // useEffect(() => {
-  //   if (!pathname.includes('/login')) {
-  //     history('/login');
-  //   }
-  // });
+  const requestUser = async () => {
+    try {
+      const URL = 'http://localhost:3001/products';
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      const response = await axios.get(URL, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setProducts(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    requestUser();
+  }, []);
 
   // const handleChange = ({ target: { value, name } }) => {
   //   setLoginData((prevState) => ({
@@ -30,27 +42,12 @@ function Products() {
   //   return (validateEmail.test(email) && password.length >= PASSWORD_LENGTH);
   // };
 
-  // const requestUser = async () => {
-  //   const payload = { email, password };
-  //   try {
-  //     const URL = 'http://localhost:3001/login';
-  //     const response = await axios.post(
-  //       URL,
-  //       payload,
-  //     );
-
-  //     setDisplay(false);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.log(error);
-  //     setDisplay(true);
-  //   }
-  // };
-
   // const handleClick = (e) => {
   //   e.preventDefault();
   //   requestUser();
   // };
+  const LENGTH_LIST = 11;
+  const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>
@@ -73,10 +70,10 @@ function Products() {
         <p
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          Nome do Usuário
+          { user.name }
         </p>
         <button
-          type="submit"
+          type="button"
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
             localStorage.clear();
@@ -85,7 +82,15 @@ function Products() {
         >
           SAIR
         </button>
-        <ProductsCard />
+        {
+          products
+            .slice(0, LENGTH_LIST).map((product, index) => (
+              <div key={ index }>
+                <ProductsCard
+                  products={ product }
+                />
+              </div>))
+        }
       </form>
     </div>
   );

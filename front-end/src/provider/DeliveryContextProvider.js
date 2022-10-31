@@ -9,6 +9,8 @@ function DeliveryContextProvider({ children }) {
     password: '',
   });
 
+  const [products, setProducts] = useState([]);
+
   const [displayParagrafo, setDisplay] = useState(false);
   // const history = useHistory();
   // const path = history.location.pathname;
@@ -18,7 +20,9 @@ function DeliveryContextProvider({ children }) {
     displayParagrafo,
     setLoginData,
     setDisplay,
-  }), [loginData, displayParagrafo]);
+    products,
+    setProducts,
+  }), [loginData, displayParagrafo, products]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>
