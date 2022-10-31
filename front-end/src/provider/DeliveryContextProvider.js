@@ -10,6 +10,7 @@ function DeliveryContextProvider({ children }) {
   });
 
   const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const [displayParagrafo, setDisplay] = useState(false);
   // const history = useHistory();
@@ -22,7 +23,9 @@ function DeliveryContextProvider({ children }) {
     setDisplay,
     products,
     setProducts,
-  }), [loginData, displayParagrafo, products]);
+    totalPrice,
+    setTotalPrice,
+  }), [loginData, displayParagrafo, products, totalPrice]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>

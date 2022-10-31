@@ -45,9 +45,13 @@ function Login() {
   const handleClick = async (e) => {
     e.preventDefault();
     const user = await requestUser();
-    console.log(user);
-    localStorage.setItem('user', JSON.stringify(user));
-    history('/customer/products');
+    if (!user) {
+      console.log('teste');
+      history('/login');
+    } else {
+      localStorage.setItem('user', JSON.stringify(user));
+      history('/customer/products');
+    }
   };
 
   return (

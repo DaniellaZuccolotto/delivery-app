@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = process.env;
+
+const jwtKey = require("fs")
+  .readFileSync("jwt.evaluation.key", { encoding: "utf-8" });
 
 const validateToken = (req, res, next) => {
     const token = req.headers.authorization;
@@ -9,7 +11,7 @@ const validateToken = (req, res, next) => {
     }
     
     try {
-      const payload = jwt.verify(token, JWT_SECRET);
+      const payload = jwt.verify(token, jwtKey);
       req.user = payload;
       return next();
     } catch (err) {

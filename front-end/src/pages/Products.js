@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductsCard from '../components/PoductsCard';
 import DeliveryContext from '../provider/DeliveryContext';
@@ -7,8 +7,18 @@ import DeliveryContext from '../provider/DeliveryContext';
 function Products() {
   const { products, setProducts } = useContext(DeliveryContext);
   const history = useNavigate();
+  const [total, setTotal] = useState(0);
 
-  const requestUser = async () => {
+  const totalPrice = () => {
+    const sum = JSON.parse(localStorage.getItem('totalPrice'));
+    console.log(sum);
+    if (!sum) {
+      return 0;
+    }
+    setTotal(sum);
+  };
+
+  const requestProducts = async () => {
     try {
       const URL = 'http://localhost:3001/products';
       const { token } = JSON.parse(localStorage.getItem('user'));
@@ -25,8 +35,9 @@ function Products() {
   };
 
   useEffect(() => {
-    requestUser();
-  }, []);
+    requestProducts();
+    totalPrice();
+  }, [total]);
 
   // const handleChange = ({ target: { value, name } }) => {
   //   setLoginData((prevState) => ({
@@ -81,6 +92,12 @@ function Products() {
           } }
         >
           SAIR
+        </button>
+        <button
+          type="button"
+        >
+          Meu Carrinho:
+          { total }
         </button>
         {
           products
