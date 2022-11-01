@@ -17,10 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'products',
   });
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.BlogPost,
-  //     { foreignKey: 'userId', as: 'blogposts' });
-  // };
+  Product.associate = (models) => {
+    Product.belongsToMany(models.SalesProducts,
+      { through: models.SalesProducts, 
+        foreignKey: 'productId', 
+        as: 'product'  });
+  };
 
   return Product;
 };
