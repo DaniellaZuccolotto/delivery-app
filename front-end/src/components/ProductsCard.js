@@ -37,6 +37,32 @@ function ProductsCard({ products }) {
     setTotalPrice(sum);
   };
 
+  const saveItensCart = (value, nameInput) => {
+    const itens = JSON.parse(localStorage.getItem('productsCart'));
+    const saveObj = {
+      ...itens,
+      [nameInput]: {
+        quantity: Number(value),
+        price: Number(price),
+        total: Number(price) * Number(value),
+      },
+    };
+    localStorage.setItem('productsCart', JSON.stringify(saveObj));
+  };
+
+  const saveItensCartSum = (nameInput) => {
+    const itens = JSON.parse(localStorage.getItem('productsCart'));
+    const saveObj = {
+      ...itens,
+      [nameInput]: {
+        quantity: qtd + 1,
+        price: Number(price),
+        total: Number(price) * (qtd + 1),
+      },
+    };
+    localStorage.setItem('productsCart', JSON.stringify(saveObj));
+  };
+
   return (
     <div>
       { !products ? <h1>Loading...</h1>
@@ -75,14 +101,18 @@ function ProductsCard({ products }) {
                 onChange={ ({ target: { value, name: nameInput } }) => {
                   setQtd(Number(value));
                   totalSumInput(value, nameInput);
+                  saveItensCart(value, nameInput);
                 } }
                 data-testid={ `customer_products__input-card-quantity-${id}` }
               />
             </label>
             <button
               type="button"
+              name={ name }
               data-testid={ `customer_products__button-card-add-item-${id}` }
-              onClick={ () => { setQtd(qtd + 1); totalSum(); } }
+              onClick={ ({ target: { name: nameInput } }) => {
+                setQtd(qtd + 1); totalSum(); saveItensCartSum(nameInput);
+              } }
             >
               +
             </button>

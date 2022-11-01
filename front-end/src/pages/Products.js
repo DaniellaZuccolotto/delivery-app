@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 import ProductsCard from '../components/ProductsCard';
 import DeliveryContext from '../provider/DeliveryContext';
 
@@ -45,50 +46,23 @@ function Products() {
   return (
     <div>
       <form>
-        <button
-          type="submit"
-          data-testid="customer_products__element-navbar-link-products"
-          // disabled={ !disabledBtn() }
-          // onClick={ handleClick }
-        >
-          PRODUTOS
-        </button>
-        <button
-          type="submit"
-          data-testid="customer_products__element-navbar-link-orders"
-          // onClick={ handleClick }
-        >
-          MEUS PEDIDOS
-        </button>
-        <p
-          data-testid="customer_products__element-navbar-user-full-name"
-        >
-          { user.name }
-        </p>
-        <button
-          type="button"
-          data-testid="customer_products__element-navbar-link-logout"
-          onClick={ () => {
-            localStorage.clear();
-            history('/login');
-          } }
-        >
-          SAIR
-        </button>
-        <button
-          type="button"
-          data-testid="customer_products__button-cart"
-          disabled={ totalPrice === 0 }
-          onClick={ () => history('/customer/checkout') }
-        >
-          Ver Carrinho:
-        </button>
-        <button
-          type="button"
-          data-testid="customer_products__checkout-bottom-value"
-        >
-          { totalPrice.toFixed(2).replace('.', ',') }
-        </button>
+        <NavBar user={ user } history={ history } />
+        <Link to="/customer/checkout">
+          <button
+            type="button"
+            data-testid="customer_products__button-cart"
+            disabled={ totalPrice === 0 }
+            // onClick={ () => history('/customer/checkout') }
+          >
+            Ver Carrinho:
+          </button>
+          <button
+            type="button"
+            data-testid="customer_products__checkout-bottom-value"
+          >
+            { totalPrice.toFixed(2).replace('.', ',') }
+          </button>
+        </Link>
         {
           products
             .slice(0, LENGTH_LIST).map((product, index) => (
