@@ -1,21 +1,21 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProductsCard from '../components/PoductsCard';
+import ProductsCard from '../components/ProductsCard';
 import DeliveryContext from '../provider/DeliveryContext';
 
 function Products() {
-  const { products, setProducts } = useContext(DeliveryContext);
+  const { products, setProducts,
+    totalPrice, setTotalPrice } = useContext(DeliveryContext);
   const history = useNavigate();
-  const [total, setTotal] = useState(0);
 
-  const totalPrice = () => {
+  const totalPriceLocal = () => {
     const sum = JSON.parse(localStorage.getItem('totalPrice'));
     console.log(sum);
     if (!sum) {
       return 0;
     }
-    setTotal(sum);
+    setTotalPrice(sum);
   };
 
   const requestProducts = async () => {
@@ -36,27 +36,9 @@ function Products() {
 
   useEffect(() => {
     requestProducts();
-    totalPrice();
-  }, [total]);
+    totalPriceLocal();
+  }, []);
 
-  // const handleChange = ({ target: { value, name } }) => {
-  //   setLoginData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const disabledBtn = () => {
-  //   const validateEmail = /^[\w+.]+@\w+\.\w{2,}/;
-  //   const PASSWORD_LENGTH = 6;
-  //   // console.log(validateEmail.test(email) && password.length > PASSWORD_LENGTH);
-  //   return (validateEmail.test(email) && password.length >= PASSWORD_LENGTH);
-  // };
-
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   requestUser();
-  // };
   const LENGTH_LIST = 11;
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -95,9 +77,17 @@ function Products() {
         </button>
         <button
           type="button"
+          data-testid="customer_products__button-cart"
+          disabled={ totalPrice === 0 }
+          onClick={ () => history('/customer/checkout') }
         >
-          Meu Carrinho:
-          { total }
+          Ver Carrinho:
+        </button>
+        <button
+          type="button"
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          { totalPrice.toFixed(2).replace('.', ',') }
         </button>
         {
           products

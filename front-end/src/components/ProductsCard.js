@@ -1,37 +1,40 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-// import DeliveryContext from '../provider/DeliveryContext';
-
-// import { Link } from 'react-router-dom';
+import DeliveryContext from '../provider/DeliveryContext';
 
 function ProductsCard({ products }) {
+  const { setTotalPrice } = useContext(DeliveryContext);
   const { name, price, urlImage, id } = products;
   const [qtd, setQtd] = useState(0);
+
   const totalSum = () => {
     const sumLocal = JSON.parse(localStorage.getItem('totalPrice'));
     if (!sumLocal) {
       localStorage.setItem('totalPrice', JSON.stringify(price));
+      setTotalPrice(price);
     }
     const sum = sumLocal + Number(price);
     localStorage.setItem('totalPrice', JSON.stringify(sum));
+    setTotalPrice(sum);
   };
 
   const totalSumSub = () => {
     const sumLocal = JSON.parse(localStorage.getItem('totalPrice'));
-    if (!sumLocal) {
-      localStorage.setItem('totalPrice', JSON.stringify(price));
-    }
     const sum = sumLocal - Number(price);
     localStorage.setItem('totalPrice', JSON.stringify(sum));
+    setTotalPrice(sum);
   };
 
-  const totalSumInput = (value) => {
+  const totalSumInput = (value, nameInput) => {
     const sumLocal = JSON.parse(localStorage.getItem('totalPrice'));
-    if (!sumLocal) {
+    if (!sumLocal || nameInput === name) {
       localStorage.setItem('totalPrice', JSON.stringify(Number(price) * Number(value)));
+      setTotalPrice(Number(price) * Number(value));
+      return 0;
     }
     const sum = sumLocal + Number(price) * Number(value);
     localStorage.setItem('totalPrice', JSON.stringify(sum));
+    setTotalPrice(sum);
   };
 
   return (
@@ -64,14 +67,14 @@ function ProductsCard({ products }) {
             >
               -
             </button>
-            <label htmlFor="email">
+            <label htmlFor={ name }>
               <input
-                name="qtd"
+                name={ name }
                 value={ qtd }
                 type="number"
-                onChange={ ({ target: { value } }) => {
+                onChange={ ({ target: { value, name: nameInput } }) => {
                   setQtd(Number(value));
-                  totalSumInput(value);
+                  totalSumInput(value, nameInput);
                 } }
                 data-testid={ `customer_products__input-card-quantity-${id}` }
               />

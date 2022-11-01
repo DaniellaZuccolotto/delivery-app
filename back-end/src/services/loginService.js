@@ -8,7 +8,7 @@ const login = async ({ email: emailR, password }) => {
   if (result.dataValues.password !== md5(password)) { 
     return { code: 401, message: 'Incorrect password' }; 
   }
-  const { role, name, email} = result.dataValues;
+  const { role, name, email } = result.dataValues;
   const token = createToken(result.dataValues);
   const retorno = { name, email, role, token };
   return { code: 200, data: retorno };

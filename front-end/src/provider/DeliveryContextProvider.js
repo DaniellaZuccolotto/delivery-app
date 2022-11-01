@@ -11,7 +11,6 @@ function DeliveryContextProvider({ children }) {
 
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [displayParagrafo, setDisplay] = useState(false);
   // const history = useHistory();
   // const path = history.location.pathname;

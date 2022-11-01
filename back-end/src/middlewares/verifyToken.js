@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-
-const jwtKey = require("fs")
-  .readFileSync("jwt.evaluation.key", { encoding: "utf-8" });
+const jwtKey = require('fs')
+  .readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
 
 const validateToken = (req, res, next) => {
     const token = req.headers.authorization;
