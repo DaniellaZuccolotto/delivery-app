@@ -12,7 +12,6 @@ function Products() {
 
   const totalPriceLocal = () => {
     const sum = JSON.parse(localStorage.getItem('totalPrice'));
-    console.log(sum);
     if (!sum) {
       return 0;
     }

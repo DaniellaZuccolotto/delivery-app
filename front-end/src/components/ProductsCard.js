@@ -63,6 +63,19 @@ function ProductsCard({ products }) {
     localStorage.setItem('productsCart', JSON.stringify(saveObj));
   };
 
+  const saveItensCartSub = (nameInput) => {
+    const itens = JSON.parse(localStorage.getItem('productsCart'));
+    const saveObj = {
+      ...itens,
+      [nameInput]: {
+        quantity: qtd - 1,
+        price: Number(price),
+        total: Number(price) * (qtd - 1),
+      },
+    };
+    localStorage.setItem('productsCart', JSON.stringify(saveObj));
+  };
+
   return (
     <div>
       { !products ? <h1>Loading...</h1>
@@ -88,7 +101,10 @@ function ProductsCard({ products }) {
               type="button"
               data-testid={ `customer_products__button-card-rm-item-${id}` }
               onClick={ () => {
-                if (qtd > 0) { setQtd(qtd - 1); totalSumSub(); }
+                if (qtd > 0) {
+                  setQtd(qtd - 1); totalSumSub();
+                  saveItensCartSub({ target: { name: nameInput } });
+                }
               } }
             >
               -
