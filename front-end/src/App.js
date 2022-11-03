@@ -3,7 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import DeliveryContextProvider from './provider/DeliveryContextProvider';
 import Login from './pages/Login';
 import './App.css';
-// import rockGlass from './images/rockGlass.svg';
+import Products from './pages/Products';
+import Checkout from './pages/Checkout';
+import OrderDetails from './pages/OrderDetails';
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={ <Login /> } />
         <Route exact path="/login" element={ <Login /> } />
-        {/* <Route><h1>Not Found</h1></Route> */}
+        <Route exact path="/customer/products" element={ <Products /> } />
+        <Route exact path="/customer/checkout" element={ <Checkout /> } />
+        <Route exact path="/customer/orders/:id" element={ <OrderDetails /> } />
       </Routes>
     </DeliveryContextProvider>
 

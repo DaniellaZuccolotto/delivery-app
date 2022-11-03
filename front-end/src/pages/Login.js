@@ -26,7 +26,6 @@ function Login() {
   const disabledBtn = () => {
     const validateEmail = /^[\w+.]+@\w+\.\w{2,}/;
     const PASSWORD_LENGTH = 6;
-    // console.log(validateEmail.test(email) && password.length > PASSWORD_LENGTH);
     return (validateEmail.test(email) && password.length >= PASSWORD_LENGTH);
   };
 
@@ -34,22 +33,24 @@ function Login() {
     const payload = { email, password };
     try {
       const URL = 'http://localhost:3001/login';
-      const response = await axios.post(
-        URL,
-        payload,
-      );
-
+      const response = await axios.post(URL, payload);
       setDisplay(false);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
       setDisplay(true);
     }
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    requestUser();
+    const user = await requestUser();
+    if (!user) {
+      history('/login');
+    } else {
+      localStorage.setItem('user', JSON.stringify(user));
+      history('/customer/products');
+    }
   };
 
   return (
