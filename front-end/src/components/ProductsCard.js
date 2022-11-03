@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import DeliveryContext from '../provider/DeliveryContext';
 
@@ -8,33 +8,10 @@ function ProductsCard({ products }) {
   const [qtd, setQtd] = useState(0);
 
   const totalSum = () => {
-    const sumLocal = JSON.parse(localStorage.getItem('totalPrice'));
-    if (!sumLocal) {
-      localStorage.setItem('totalPrice', JSON.stringify(price));
-      setTotalPrice(price);
-    }
-    const sum = sumLocal + Number(price);
-    localStorage.setItem('totalPrice', JSON.stringify(sum));
-    setTotalPrice(sum);
-  };
-
-  const totalSumSub = () => {
-    const sumLocal = JSON.parse(localStorage.getItem('totalPrice'));
-    const sum = sumLocal - Number(price);
-    localStorage.setItem('totalPrice', JSON.stringify(sum));
-    setTotalPrice(sum);
-  };
-
-  const totalSumInput = (value, nameInput) => {
-    const sumLocal = JSON.parse(localStorage.getItem('totalPrice'));
-    if (!sumLocal || nameInput === name) {
-      localStorage.setItem('totalPrice', JSON.stringify(Number(price) * Number(value)));
-      setTotalPrice(Number(price) * Number(value));
-      return 0;
-    }
-    const sum = sumLocal + Number(price) * Number(value);
-    localStorage.setItem('totalPrice', JSON.stringify(sum));
-    setTotalPrice(sum);
+    const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
+    const productsValues = Object.values(Object.values(productsCartLocal[0]));
+    const total = productsValues.reduce((acc, curr) => acc + curr.total, 0);
+    setTotalPrice(total);
   };
 
   const saveItensCart = (value, nameInput) => {
@@ -48,6 +25,7 @@ function ProductsCard({ products }) {
       },
     };
     localStorage.setItem('productsCart', JSON.stringify(saveObj));
+    totalSum();
   };
 
   const saveItensCartSum = (nameInput) => {
@@ -61,6 +39,7 @@ function ProductsCard({ products }) {
       },
     };
     localStorage.setItem('productsCart', JSON.stringify(saveObj));
+    totalSum();
   };
 
   const saveItensCartSub = (nameInput) => {
@@ -74,6 +53,7 @@ function ProductsCard({ products }) {
       },
     };
     localStorage.setItem('productsCart', JSON.stringify(saveObj));
+    totalSum();
   };
 
   return (
@@ -99,11 +79,12 @@ function ProductsCard({ products }) {
             />
             <button
               type="button"
+              name={ name }
               data-testid={ `customer_products__button-card-rm-item-${id}` }
-              onClick={ () => {
+              onClick={ ({ target: { name: nameInput } }) => {
                 if (qtd > 0) {
-                  setQtd(qtd - 1); totalSumSub();
-                  saveItensCartSub({ target: { name: nameInput } });
+                  setQtd(qtd - 1);
+                  saveItensCartSub(nameInput);
                 }
               } }
             >
@@ -116,7 +97,6 @@ function ProductsCard({ products }) {
                 type="number"
                 onChange={ ({ target: { value, name: nameInput } }) => {
                   setQtd(Number(value));
-                  totalSumInput(value, nameInput);
                   saveItensCart(value, nameInput);
                 } }
                 data-testid={ `customer_products__input-card-quantity-${id}` }
@@ -127,7 +107,8 @@ function ProductsCard({ products }) {
               name={ name }
               data-testid={ `customer_products__button-card-add-item-${id}` }
               onClick={ ({ target: { name: nameInput } }) => {
-                setQtd(qtd + 1); totalSum(); saveItensCartSum(nameInput);
+                setQtd(qtd + 1);
+                saveItensCartSum(nameInput);
               } }
             >
               +

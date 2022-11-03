@@ -11,11 +11,14 @@ function Products() {
   const history = useNavigate();
 
   const totalPriceLocal = () => {
-    const sum = JSON.parse(localStorage.getItem('totalPrice'));
-    if (!sum) {
+    const productsLocal = JSON.parse(localStorage.getItem('productsCart'));
+    if (!productsLocal) {
       return 0;
     }
-    setTotalPrice(sum);
+    const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
+    const productsValues = Object.values(Object.values(productsCartLocal[0]));
+    const total = productsValues.reduce((acc, curr) => acc + curr.total, 0);
+    setTotalPrice(total);
   };
 
   const requestProducts = async () => {

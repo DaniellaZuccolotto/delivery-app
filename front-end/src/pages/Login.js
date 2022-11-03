@@ -46,7 +46,6 @@ function Login() {
     e.preventDefault();
     const user = await requestUser();
     if (!user) {
-      console.log('teste');
       history('/login');
     } else {
       localStorage.setItem('user', JSON.stringify(user));

@@ -1,68 +1,81 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 // import DeliveryContext from '../provider/DeliveryContext';
 
-function ProductsList({ product, index, values }) {
+function ProductsList() {
+  const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
+  const productsSave = Object.keys(productsCartLocal[0]);
+  const productsValues = Object.values(Object.values(productsCartLocal[0]));
+  const tHead = ['Item', 'Descrição', 'Quantidade',
+    'Valor Unitário', 'Sub-total', 'Remover Item'];
+
   return (
-    <td>
-      { !product ? <h1>Loading...</h1>
-        : (
-          <ul>
-            <span
-              data-testid={
-                `customer_checkout__element-order-table-item-number-${index}`
-              }
-              style={ { margin: '20px' } }
-            >
-              { index }
-            </span>
-            <span
-              data-testid={ `customer_checkout__element-order-table-name-${index}` }
-              style={ { margin: '20px' } }
-            >
-              { product }
-            </span>
-            <span
-              data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
-              style={ { margin: '20px' } }
-            >
-              { values.quantity }
-            </span>
-            <span
-              data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
-              style={ { margin: '20px' } }
-            >
-              { values.price.toFixed(2).replace('.', ',') }
-            </span>
-            <span
-              data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
-              style={ { margin: '20px' } }
-            >
-              { values.total.toFixed(2).replace('.', ',') }
-            </span>
-            <button
-              type="button"
-              data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-              style={ { margin: '20px' } }
-              onClick={ () => {
-                if (qtd > 0) {
-                  setQtd(qtd - 1); totalSumSub();
-                  saveItensCartSub({ target: { name: nameInput } });
+    <div>
+      <table>
+        <thead>
+          <tr>
+            {tHead.map((coluns, i) => <th key={ i }>{coluns}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {productsSave.map((product, index) => (
+            <tr key={ index }>
+              <td
+                data-testid={
+                  `customer_checkout__element-order-table-item-number-${index}`
                 }
-              } }
-            >
-              Remover
-            </button>
-          </ul>
-        )}
-    </td>
+              >
+                { index }
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-name-${index}` }
+              >
+                { product }
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
+              >
+                { productsValues[index].quantity }
+              </td>
+              <td
+                data-testid={
+                  `customer_checkout__element-order-table-unit-price-${index}`
+                }
+              >
+                { productsValues[index].price.toFixed(2).replace('.', ',') }
+              </td>
+              <td
+                data-testid={
+                  `customer_checkout__element-order-table-sub-total-${index}`
+                }
+              >
+                { productsValues[index].total.toFixed(2).replace('.', ',') }
+              </td>
+              <td>
+                <button
+                  type="button"
+                  data-testid={ `customer_checkout__element-order-table-remove-${index}` }
+                  style={ { margin: '20px' } }
+                  onClick={ () => {
+                    if (qtd > 0) {
+                      setQtd(qtd - 1); totalSumSub();
+                      saveItensCartSub({ target: { name: nameInput } });
+                    }
+                  } }
+                >
+                  Remover
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p
+        data-testid="customer_checkout__element-order-total-price"
+      >
+        { productsValues.reduce((acc, curr) => acc + curr.total, 0) }
+      </p>
+    </div>
   );
 }
-
-ProductsList.propTypes = {
-  product: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  values: PropTypes.objectOf(PropTypes.string).isRequired,
-};
 
 export default ProductsList;
