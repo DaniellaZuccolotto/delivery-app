@@ -6,4 +6,12 @@ const createUser = async (req = Request, res = Response) => {
   return res.status(code).json({ message });
 };
 
-module.exports = { createUser };
+const getSellers = async (req=  Request, res= Response) => {
+  const { code, message, sellers } = await registerService.getSellers();
+
+  if (message) return res.status(code).json(message);
+
+  return res.status(code).json(sellers);
+};
+
+module.exports = { createUser, getSellers };

@@ -12,4 +12,4 @@ const registerOrders = async (infosOrder) => {
   return order;
 };
 
-module.exports = { getOrders, registerOrders };
+module.exports = { getOrders, registerOrders};

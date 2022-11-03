@@ -22,4 +22,12 @@ const createUser = async (user) => {
   return { code: 201, message: 'Successfully created' };
 };
 
-module.exports = { createUser };
+const getSellers = async () => {
+  const [sellers] = await User.findAll({ where: { role: 'seller' }});
+
+  if (!sellers) return { code: 404, message: 'Not found user' };
+
+  return { code: 200, sellers };
+};
+
+module.exports = { createUser, getSellers };
