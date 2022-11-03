@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import './App.css';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
+import OrderDetails from './pages/OrderDetails';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/login" element={ <Login /> } />
         <Route exact path="/customer/products" element={ <Products /> } />
         <Route exact path="/customer/checkout" element={ <Checkout /> } />
+        <Route exact path="/customer/orders/:id" element={ <OrderDetails /> } />
       </Routes>
     </DeliveryContextProvider>
 

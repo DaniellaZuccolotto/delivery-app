@@ -1,9 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import requestSeller, { createSale } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
 
 function DetailsAdress() {
-  const { sale, setSale } = useContext(DeliveryContext);
-  // const user = JSON.parse(localStorage.getItem('user'));
+  const { sale, setSale, productsCart } = useContext(DeliveryContext);
+  const [sellers, setSellers] = useState([]);
+  const history = useNavigate();
+
+  const setUserTotal = () => {
+    const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
+    const productsValues = Object.values(Object.values(productsCartLocal[0]));
+    const total = productsValues.reduce((acc, curr) => acc + curr.total, 0);
+    const user = JSON.parse(localStorage.getItem('user'));
+    setSale({ ...sale, totalPrice: total, userId: user.id });
+  };
 
   const handleChange = ({ target: { value, name } }) => {
     setSale((prevState) => ({
@@ -12,8 +23,35 @@ function DetailsAdress() {
     }));
   };
 
-  const findSeller = ({ target: { value } }) => {
-    console.log(value);
+  const findSeller = async () => {
+    try {
+      const seller = await requestSeller();
+      setSellers(seller);
+      return seller;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    findSeller();
+    setUserTotal();
+  }, []);
+
+  const onChangeSeller = ({ target: { value } }) => {
+    setSale((prevState) => ({
+      ...prevState,
+      sellerId: Number(value),
+    }));
+  };
+
+  const finishSale = async () => {
+    const bodyProducts = {
+      products: productsCart,
+      // quantity: buscar do local storege
+    };
+    const sales = await createSale(bodyProducts, sale);
+    history(`/customer/orders/${sales.id}`);
   };
 
   return (
@@ -23,11 +61,14 @@ function DetailsAdress() {
         <select
           name="sellerId"
           data-testid="customer_checkout__select-seller"
-          onChange={ findSeller }
-          value="Fulana"
+          onChange={ onChangeSeller }
+          value={ sale.sellerId }
         >
-          <option value="Fulana">Fulana</option>
-          <option value="Fulana2">Fulana</option>
+          { sellers.map((seller) => (
+            <option key={ seller.id } value={ seller.id }>
+              { seller.name }
+            </option>
+          )) }
         </select>
       </label>
       <label htmlFor="deliveryAddress">
@@ -55,8 +96,7 @@ function DetailsAdress() {
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
-        // disabled={ !disabledBtn() }
-        // onClick={ handleClick }
+        onClick={ finishSale }
       >
         Finalizar Pedido
       </button>

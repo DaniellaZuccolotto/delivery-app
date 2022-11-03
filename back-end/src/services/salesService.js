@@ -6,10 +6,10 @@ const getOrders = async () => {
   return orders;
 }; 
 
-const registerOrders = async (infosOrder) => {
-  const order = await Sales.create(infosOrder);
-
-  return order;
+const registerOrders = async (bodyProducts, bodySales) => {
+  const order = await Sales.create(bodySales);
+  
+  return order.dataValues;
 };
 
 module.exports = { getOrders, registerOrders};

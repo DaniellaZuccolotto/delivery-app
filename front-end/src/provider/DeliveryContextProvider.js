@@ -14,7 +14,7 @@ function DeliveryContextProvider({ children }) {
   const [productsCart, setProductsCart] = useState([]);
   const [sale, setSale] = useState({
     userId: 0,
-    sellerId: 0,
+    sellerId: 2,
     totalPrice: 0,
     deliveryAddress: '',
     deliveryNumber: '',
@@ -34,7 +34,8 @@ function DeliveryContextProvider({ children }) {
     setProductsCart,
     sale,
     setSale,
-  }), [loginData, displayParagrafo, products, totalPrice, productsCart, sale]);
+  }), [loginData, displayParagrafo, products, totalPrice, productsCart,
+    sale]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>

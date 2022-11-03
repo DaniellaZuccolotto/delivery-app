@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER, 
           field: 'user_id'
         },
-        sallerId: { 
+        sellerId: { 
           type: DataTypes.INTEGER, 
           field: 'seller_id'
         },
         totalPrice: {
-          type: DataTypes.DECIMAL,
+          type: DataTypes.DECIMAL(9, 2),
           field: 'total_price'
         },
-        deliveryAdress: {
+        deliveryAddress: {
           type: DataTypes.STRING,
           field: 'delivery_address'
         },
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
           field: 'sale_date'
         },
 
-        status: DataTypes.DATE
+        status: DataTypes.STRING
         }, {
         timestamps: false,
         tableName: 'sales'
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'users' 
       });
       Sales.belongsTo(models.User, { 
-        foreignKey: 'sallerId', 
+        foreignKey: 'sellerId', 
         as: 'sellers' 
       });
     }

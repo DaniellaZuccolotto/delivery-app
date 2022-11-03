@@ -23,7 +23,7 @@ const createUser = async (user) => {
 };
 
 const getSellers = async () => {
-  const [sellers] = await User.findAll({ where: { role: 'seller' }});
+  const sellers = await User.findAll({ where: { role: 'seller' }});
 
   if (!sellers) return { code: 404, message: 'Not found user' };
 

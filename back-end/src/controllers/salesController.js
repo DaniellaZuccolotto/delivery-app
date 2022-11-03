@@ -2,9 +2,10 @@ const { Request, Response } = require('express');
 const { salesService } = require('../services')
 
 const registerOrders = async (req = Request, res=  Response) => {
-  await salesService.registerOrders(req.body);
+  const { bodyProducts, bodySales } = req.body;
+  const order = await salesService.registerOrders(bodyProducts, bodySales);
 
-  res.status(201).json({ message: 'create succefully' })
+  return res.status(201).json(order)
 };
 
 const getOrders = async (req=  Request, res= Response) => {
