@@ -7,6 +7,7 @@ function NavBar({ user, history }) {
       <button
         type="submit"
         data-testid="customer_products__element-navbar-link-products"
+        onClick={ () => history('/customer/products') }
       >
         PRODUTOS
       </button>
