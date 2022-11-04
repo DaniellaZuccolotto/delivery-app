@@ -11,7 +11,7 @@ const requestSeller = async () => {
 };
 
 export const createSale = async (bodyProducts, bodySales) => {
-  payload = { bodyProducts, bodySales };
+  const payload = { bodyProducts, bodySales };
   try {
     const URL = 'http://localhost:3001/orders';
     const { token } = JSON.parse(localStorage.getItem('user'));
@@ -24,6 +24,7 @@ export const createSale = async (bodyProducts, bodySales) => {
         },
       },
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

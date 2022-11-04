@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { salesController } = require('../controllers/')
+const { salesController } = require('../controllers');
 const authMiddleware = require('../middlewares/verifyToken');
 
 const salesRouter = Router();

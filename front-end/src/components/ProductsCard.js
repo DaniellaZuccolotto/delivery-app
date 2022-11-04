@@ -22,6 +22,7 @@ function ProductsCard({ products }) {
         quantity: Number(value),
         price: Number(price),
         total: Number(price) * Number(value),
+        id,
       },
     };
     localStorage.setItem('productsCart', JSON.stringify(saveObj));
@@ -36,6 +37,7 @@ function ProductsCard({ products }) {
         quantity: qtd + 1,
         price: Number(price),
         total: Number(price) * (qtd + 1),
+        id,
       },
     };
     localStorage.setItem('productsCart', JSON.stringify(saveObj));
@@ -50,6 +52,7 @@ function ProductsCard({ products }) {
         quantity: qtd - 1,
         price: Number(price),
         total: Number(price) * (qtd - 1),
+        id,
       },
     };
     localStorage.setItem('productsCart', JSON.stringify(saveObj));

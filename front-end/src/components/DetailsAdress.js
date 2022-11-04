@@ -4,7 +4,7 @@ import requestSeller, { createSale } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
 
 function DetailsAdress() {
-  const { sale, setSale, productsCart } = useContext(DeliveryContext);
+  const { sale, setSale, saleProducts, setSaleProducts } = useContext(DeliveryContext);
   const [sellers, setSellers] = useState([]);
   const history = useNavigate();
 
@@ -12,8 +12,13 @@ function DetailsAdress() {
     const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
     const productsValues = Object.values(Object.values(productsCartLocal[0]));
     const total = productsValues.reduce((acc, curr) => acc + curr.total, 0);
+    const arrayProductId = productsValues.map((product) => product.id);
+    const arrayQuantity = productsValues.map((product) => product.quantity);
     const user = JSON.parse(localStorage.getItem('user'));
     setSale({ ...sale, totalPrice: total, userId: user.id });
+    setSaleProducts({ ...saleProducts,
+      productId: arrayProductId,
+      quantity: arrayQuantity });
   };
 
   const handleChange = ({ target: { value, name } }) => {
@@ -47,11 +52,11 @@ function DetailsAdress() {
 
   const finishSale = async () => {
     const bodyProducts = {
-      products: productsCart,
-      // quantity: buscar do local storege
+      productId: saleProducts.productId,
+      quantity: saleProducts.quantity,
     };
-    const sales = await createSale(bodyProducts, sale);
-    history(`/customer/orders/${sales.id}`);
+    const { orders } = await createSale(bodyProducts, sale);
+    history(`/customer/orders/${orders.id}`);
   };
 
   return (
