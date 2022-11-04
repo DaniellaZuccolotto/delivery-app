@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/verifyToken');
 const salesRouter = Router();
 
 salesRouter.get('/', salesController.getOrders);
+salesRouter.get('/:id', salesController.getOrderById);
 salesRouter.post('/', authMiddleware.validateToken, salesController.registerOrders);
 
 module.exports = salesRouter;

@@ -6,6 +6,12 @@ const getOrders = async () => {
   return orders;
 }; 
 
+const getOrderById = async (id) => {
+    const orders = await Sales.findOne({ where: { id } });
+  
+    return orders;
+};
+
 const registerOrders = async (bodyProducts, bodySales) => {
   const order = await Sales.create(bodySales);
   const { id } = order.dataValues;
@@ -20,4 +26,4 @@ const registerOrders = async (bodyProducts, bodySales) => {
   return { orders: order.dataValues, salesProducts };
 };
 
-module.exports = { getOrders, registerOrders };
+module.exports = { getOrders, registerOrders, getOrderById };

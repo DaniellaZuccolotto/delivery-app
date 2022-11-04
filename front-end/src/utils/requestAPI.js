@@ -31,4 +31,15 @@ export const createSale = async (bodyProducts, bodySales) => {
   }
 };
 
+export const requestOrder = async (id) => {
+  try {
+    const URL = `http://localhost:3001/orders/${id}`;
+    const response = await axios.get(URL);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default requestSeller;
