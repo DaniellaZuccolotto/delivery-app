@@ -5,7 +5,7 @@ module.exports = {
           { 
             id: 1,
             user_id: 1,
-            seller_id: 1,
+            seller_id: 2,
             total_price: 124.50,
             delivery_address: 'Rua inventada Av 5',
             delivery_number: '555',
