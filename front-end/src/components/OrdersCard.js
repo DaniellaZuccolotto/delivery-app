@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dateFormater from '../utils/dateFormater';
+
+// referencia toLocaleString:
+// https://stackoverflow.com/questions/149055/how-to-format-numbers-as-currency-strings
 
 function OrdersCard({ order }) {
   const { id, status, saleDate, totalPrice } = order;
@@ -17,21 +21,31 @@ function OrdersCard({ order }) {
         { status }
       </span>
       <span
-        data-testid={ `customer_orders__element-order-date${id}` }
+        data-testid={ `customer_orders__element-order-date-${id}` }
       >
-        { saleDate }
+        { dateFormater(saleDate) }
       </span>
       <span
         data-testid={ `customer_orders__element-card-price-${id}` }
       >
-        { totalPrice }
+        { Number(totalPrice)
+          .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }
       </span>
     </div>
   );
 }
 
 OrdersCard.propTypes = {
-  order: PropTypes.objectOf().isRequired,
+  order: PropTypes.shape({
+    id: PropTypes.number,
+    userId: PropTypes.number,
+    sellerId: PropTypes.number,
+    totalPrice: PropTypes.string,
+    deliveryAddress: PropTypes.string,
+    deliveryNumber: PropTypes.string,
+    saleDate: PropTypes.string,
+    status: PropTypes.string,
+  }).isRequired,
 };
 
 export default OrdersCard;
