@@ -14,10 +14,10 @@ const registerOrders = async (bodyProducts, bodySales) => {
     productId: product,
     quantity: bodyProducts.quantity[index],
   }));
-  const createProducts = products.map(async (product) => await SalesProducts.create(product));
+  const createProducts = products.map((product) => SalesProducts.create(product));
   const result = await Promise.all(createProducts);
   const salesProducts = result.map((product) => product.dataValues);
-  return { orders: order.dataValues, salesProducts};
+  return { orders: order.dataValues, salesProducts };
 };
 
-module.exports = { getOrders, registerOrders};
+module.exports = { getOrders, registerOrders };
