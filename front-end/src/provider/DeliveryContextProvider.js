@@ -21,6 +21,11 @@ function DeliveryContextProvider({ children }) {
     status: 'Pendente',
   });
 
+  const [saleProducts, setSaleProducts] = useState({
+    productId: [],
+    quantity: [],
+  });
+
   const contextValue = useMemo(() => ({
     loginData,
     displayParagrafo,
@@ -34,8 +39,10 @@ function DeliveryContextProvider({ children }) {
     setProductsCart,
     sale,
     setSale,
+    saleProducts,
+    setSaleProducts,
   }), [loginData, displayParagrafo, products, totalPrice, productsCart,
-    sale]);
+    sale, saleProducts]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>
