@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import dateFormater from '../utils/dateFormater';
 
 // referencia toLocaleString:
@@ -9,7 +10,7 @@ function OrdersCard({ order }) {
   const { id, status, saleDate, totalPrice } = order;
 
   return (
-    <div>
+    <Link to={ `/customer/orders/${id}` }>
       <span
         data-testid={ `customer_orders__element-order-id-${id}` }
       >
@@ -31,7 +32,7 @@ function OrdersCard({ order }) {
         { Number(totalPrice)
           .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }
       </span>
-    </div>
+    </Link>
   );
 }
 
