@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         saleDate: {
-          type: DataTypes.DECIMAL,
+          type: DataTypes.DATE,
           field: 'sale_date'
         },
 

@@ -7,13 +7,14 @@ function NavBar({ user, history }) {
       <button
         type="submit"
         data-testid="customer_products__element-navbar-link-products"
+        onClick={ () => history('/customer/products') }
       >
         PRODUTOS
       </button>
       <button
         type="submit"
         data-testid="customer_products__element-navbar-link-orders"
-        // onClick={ handleClick }
+        onClick={ () => history('/customer/orders') }
       >
         MEUS PEDIDOS
       </button>
