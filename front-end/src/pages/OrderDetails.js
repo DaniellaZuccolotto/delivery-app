@@ -48,7 +48,6 @@ function OrderDetails() {
               {`${orders.id}`}
             </td>
             <td
-              // eslint-disable-next-line max-len
               data-testid="customer_order_details__element-order-details-label-seller-name"
             >
               P.Vend:
@@ -62,7 +61,6 @@ function OrderDetails() {
 
             </td>
             <td
-              // eslint-disable-next-line max-len
               data-testid={ `customer_order_details__element-order-details-label-delivery-status${index}` }
             >
               { orders.status }
