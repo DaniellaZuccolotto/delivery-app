@@ -14,4 +14,10 @@ const getOrders = async (_req = Request, res = Response) => {
   return res.status(200).json(orders);
 };
 
-module.exports = { registerOrders, getOrders };
+const getSaleProcudts = async (_req = Request, res = Response) => {
+  const orders = await salesService.getSaleProcudts();
+
+  return res.status(200).json(orders);
+};
+
+module.exports = { registerOrders, getOrders, getSaleProcudts };

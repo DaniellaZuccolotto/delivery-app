@@ -4,7 +4,13 @@ const getOrders = async () => {
   const orders = await Sales.findAll();
 
   return orders;
-}; 
+};
+
+const getSaleProcudts = async () => {
+  const orders = await SalesProducts.findAll();
+
+  return orders;
+}
 
 const registerOrders = async (bodyProducts, bodySales) => {
   const order = await Sales.create(bodySales);
@@ -20,4 +26,4 @@ const registerOrders = async (bodyProducts, bodySales) => {
   return { orders: order.dataValues, salesProducts };
 };
 
-module.exports = { getOrders, registerOrders };
+module.exports = { getOrders, registerOrders, getSaleProcudts };

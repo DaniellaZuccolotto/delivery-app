@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import ProductsCard from '../components/ProductsCard';
 import DeliveryContext from '../provider/DeliveryContext';
+import { requestProducts } from '../utils/requestAPI';
 
 function Products() {
   const { products, setProducts,
@@ -21,24 +21,13 @@ function Products() {
     setTotalPrice(total);
   };
 
-  const requestProducts = async () => {
-    try {
-      const URL = 'http://localhost:3001/products';
-      const { token } = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.get(URL, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      setProducts(response.data);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
+  const requestProduct = async () => {
+    const returnProducts = await requestProducts();
+    setProducts(returnProducts);
   };
 
   useEffect(() => {
-    requestProducts();
+    requestProduct();
     totalPriceLocal();
   }, []);
 
