@@ -39,6 +39,20 @@ export const requestOrder = async (id) => {
     return response.data;
   } catch (error) {
     console.log(error);
+    }
+  };
+
+export const requestOrders = async () => {
+  try {
+    const URL = 'http://localhost:3001/orders';
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    const response = await axios.get(
+      URL,
+      { headers: { Authorization: token } },
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
   }
 };
 
