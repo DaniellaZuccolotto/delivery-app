@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import ProductList from '../components/ProductsList';
 import { requestOrder } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
 import NavBar from '../components/NavBar';
@@ -26,8 +25,6 @@ function OrderDetails() {
     setProductsCart(productsSave);
   };
 
-  console.log(order);
-
   useEffect(() => {
     saveOrder();
     initProducts();
@@ -35,36 +32,32 @@ function OrderDetails() {
 
   return (
     <div>
-      <h1>Detalhe do Pedido</h1>
       <NavBar user={ user } history={ history } />
-
+      <h1>Detalhe do Pedido</h1>
       <section>
-        {order.map((orders, index) => (
+        { order.map((orders, index) => (
           <>
             <td
               data-testid="customer_order_details__element-order-details-label-order-id"
             >
               Pedido:
-              {`${orders.id}`}
+              { orders.id }
             </td>
             <td
               data-testid="customer_order_details__element-order-details-label-seller-name"
             >
               P.Vend:
               { seller[0].name }
-
             </td>
             <td
               data-testid="customer_order_details__element-order-details-label-order-date"
             >
               { orders.saleDate }
-
             </td>
             <td
               data-testid={ `customer_order_details__element-order-details-label-delivery-status${index}` }
             >
               { orders.status }
-
             </td>
 
             <button
@@ -77,13 +70,11 @@ function OrderDetails() {
           </>
         ))}
       </section>
-
       <thead>
         <tr>
           {tHead.map((coluns, i) => <th key={ i }>{coluns}</th>)}
         </tr>
       </thead>
-
       <tbody>
         {productsCart.map((product, i) => (
           <tr key={ i }>
@@ -121,18 +112,14 @@ function OrderDetails() {
           </tr>
         ))}
       </tbody>
-
       <p
         data-testid="customer_order_details__element-order-total-price"
       >
         Total:
-        {' '}
         { productsValues.reduce((acc, curr) => acc + curr.total, 0)
           .toFixed(2).replace('.', ',') }
       </p>
-
-    </div>
-  );
-}
+  </div>
+ )};
 
 export default OrderDetails;

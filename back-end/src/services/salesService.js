@@ -2,14 +2,17 @@ const { Sales, SalesProducts } = require('../database/models');
 
 const getOrders = async () => {
   const orders = await Sales.findAll();
-
   return orders;
-}; 
+};
+
+const getSaleProcudts = async () => {
+  const orders = await SalesProducts.findAll();
+  return orders;
+};
 
 const getOrderById = async (id) => {
-    const orders = await Sales.findOne({ where: { id } });
-  
-    return orders;
+  const orders = await Sales.findOne({ where: { id } });
+  return orders;
 };
 
 const registerOrders = async (bodyProducts, bodySales) => {
@@ -26,4 +29,4 @@ const registerOrders = async (bodyProducts, bodySales) => {
   return { orders: order.dataValues, salesProducts };
 };
 
-module.exports = { getOrders, registerOrders, getOrderById };
+module.exports = { getOrders, registerOrders, getOrderById, getSaleProcudts };

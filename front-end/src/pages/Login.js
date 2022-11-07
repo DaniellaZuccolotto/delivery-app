@@ -49,9 +49,21 @@ function Login() {
     const user = await requestUser();
     if (!user) {
       history('/login');
-    } else {
-      localStorage.setItem('user', JSON.stringify(user));
+      return null;
+    }
+    localStorage.setItem('user', JSON.stringify(user));
+    switch (user.role) {
+    case 'seller':
+      history('/seller/orders');
+      break;
+    case 'administrator':
+      history('/admin/manage');
+      break;
+    case 'customer':
       history('/customer/products');
+      break;
+    default:
+      break;
     }
   };
 
