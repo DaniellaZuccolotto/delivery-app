@@ -5,7 +5,7 @@ import DeliveryContext from '../provider/DeliveryContext';
 import formatDate from '../utils/formatDate';
 
 function SalesCard() {
-  const { saleSeller, setSaleSeller } = useContext(DeliveryContext);
+  const { saleSeller, setSaleSeller, setSaleDetails } = useContext(DeliveryContext);
 
   const requestAPI = async () => {
     const { id } = JSON.parse(localStorage.getItem('user'));
@@ -18,13 +18,21 @@ function SalesCard() {
     requestAPI();
   }, []);
 
+  const detailsClick = (id) => {
+    const sale = saleSeller.filter((sales) => sales.id === id);
+    setSaleDetails(sale);
+  };
+
   return (
     <div>
       <table>
         <tbody>
           {saleSeller.map((sale, index) => (
             <tr key={ index }>
-              <Link to={ `/seller/orders/${sale.id}` }>
+              <Link
+                to={ `/seller/orders/${sale.id}` }
+                onClick={ () => { detailsClick(sale.id); } }
+              >
                 <td
                   data-testid={
                     `seller_orders__element-order-id-${sale.id}`
