@@ -22,8 +22,8 @@ function SalesCardDetails() {
                 { formatDate(sale.saleDate) }
               </td>
               <td
-                // eslint-disable-next-line max-len
-                data-testid="seller_order_details__element-order-details-label-delivery-status"
+                data-testid={ 'seller_order_details__'
+                + 'element-order-details-label-delivery-status' }
               >
                 { sale.status }
               </td>

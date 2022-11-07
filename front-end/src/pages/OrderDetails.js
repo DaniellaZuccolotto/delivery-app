@@ -44,7 +44,8 @@ function OrderDetails() {
               { orders.id }
             </td>
             <td
-              data-testid="customer_order_details__element-order-details-label-seller-name"
+              data-testid={ 'customer_order_details__'
+             + 'element-order-details-label-seller-name' }
             >
               P.Vend:
               { seller[0].name }
@@ -55,7 +56,8 @@ function OrderDetails() {
               { orders.saleDate }
             </td>
             <td
-              data-testid={ `customer_order_details__element-order-details-label-delivery-status${index}` }
+              data-testid={ 'customer_order_details__'
+              + `element-order-details-label-delivery-status${index}` }
             >
               { orders.status }
             </td>
@@ -119,7 +121,8 @@ function OrderDetails() {
         { productsValues.reduce((acc, curr) => acc + curr.total, 0)
           .toFixed(2).replace('.', ',') }
       </p>
-  </div>
- )};
+    </div>
+  );
+}
 
 export default OrderDetails;
