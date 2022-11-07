@@ -14,6 +14,8 @@ function Login() {
     if (!pathname.includes('/login')) {
       history('/login');
     }
+    // esse if faz com que o usuário seja redirecionado para a tela de produtos caso já esteja logado
+    if (JSON.parse(localStorage.getItem('user'))) history('/customer/products');
   });
 
   const handleChange = ({ target: { value, name } }) => {
