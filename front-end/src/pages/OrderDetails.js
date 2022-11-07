@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 // import ProductList from '../components/ProductsList';
 import { requestOrder } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
+import NavBar from '../components/NavBar';
 
 function OrderDetails() {
   const [order, setOrder] = useState([]);
   const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem('user'));
+  const history = useNavigate();
 
   const { setProductsCart, productsCart } = useContext(DeliveryContext);
   const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
@@ -33,54 +36,49 @@ function OrderDetails() {
   return (
     <div>
       <h1>Detalhe do Pedido</h1>
+      <NavBar user={ user } history={ history } />
 
-      <tbody>
+      <section>
         {order.map((orders, index) => (
-          <tr key={ index }>
+          <>
             <td
-              data-testid="
-              customer_order_details__element-order-details-label-order-id"
+              data-testid="customer_order_details__element-order-details-label-order-id"
             >
-              Pedido
-              {' '}
-              {`00${orders.id}`}
-              {' '}
+              Pedido:
+              {`${orders.id}`}
             </td>
             <td
-              data-testid="customer_order_
-                  details__element-order-details-label-seller-name"
+              // eslint-disable-next-line max-len
+              data-testid="customer_order_details__element-order-details-label-seller-name"
             >
               P.Vend:
-              {' '}
               { seller[0].name }
 
             </td>
             <td
-              data-testid="customer_order_details__
-                  element-order-details-label-order-date"
+              data-testid="customer_order_details__element-order-details-label-order-date"
             >
               { orders.saleDate }
 
             </td>
             <td
-              data-testid={
-                `customer_order_details__
-                  element-order-details-label-delivery-status${index}`
-              }
+              // eslint-disable-next-line max-len
+              data-testid={ `customer_order_details__element-order-details-label-delivery-status${index}` }
             >
               { orders.status }
 
             </td>
 
             <button
-              type="submit"
+              type="button"
+              disabled="true"
               data-testid="customer_order_details__button-delivery-check"
             >
               Marcar como entregue
             </button>
-          </tr>
+          </>
         ))}
-      </tbody>
+      </section>
 
       <thead>
         <tr>
@@ -104,8 +102,7 @@ function OrderDetails() {
               { product }
             </td>
             <td
-              data-testid={ `customer_order_details__
-                  element-order-table-quantity-${i}` }
+              data-testid={ `customer_order_details__element-order-table-quantity-${i}` }
             >
               { productsValues[i].quantity }
             </td>
