@@ -3,31 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { requestOrder } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
 import NavBar from '../components/NavBar';
+import dateFormater from '../utils/dateFormater';
 
 function OrderDetails() {
   const [order, setOrder] = useState([]);
+  const [orderProducts, setOrderProducts] = useState([]);
   const { id } = useParams();
-  const user = JSON.parse(localStorage.getItem('user'));
   const history = useNavigate();
-
-  const { setProductsCart, productsCart } = useContext(DeliveryContext);
-  const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
-  const productsSave = Object.keys(productsCartLocal[0]);
-  const productsValues = Object.values(Object.values(productsCartLocal[0]));
-  const tHead = ['Item', 'Descrição', 'Quantidade', 'Valor Unitário', 'Sub-total'];
-  const seller = Object.values(JSON.parse(localStorage.getItem('vendedor')));
 
   const saveOrder = async () => {
     setOrder([await requestOrder(id)]);
-  };
-
-  const initProducts = () => {
-    setProductsCart(productsSave);
+    setOrderProducts();
   };
 
   useEffect(() => {
     saveOrder();
-    initProducts();
   }, []);
 
   return (
@@ -53,7 +43,7 @@ function OrderDetails() {
             <td
               data-testid="customer_order_details__element-order-details-label-order-date"
             >
-              { orders.saleDate }
+              { dateFormater(orders.saleDate) }
             </td>
             <td
               data-testid={ 'customer_order_details__'

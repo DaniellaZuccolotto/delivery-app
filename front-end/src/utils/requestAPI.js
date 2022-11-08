@@ -91,4 +91,18 @@ export const requestOrders = async () => {
   }
 };
 
+export const updateSaleStatus = async (id, status) => {
+  const body = { status };
+  try {
+    const URL = `http://localhost:3001/orders/${id}`;
+    const response = await axios.put(
+      URL,
+      body,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default requestSeller;

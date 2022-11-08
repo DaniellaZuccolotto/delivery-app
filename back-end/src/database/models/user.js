@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  const User = sequelize.define('users', {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -12,9 +11,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.hasMany(models.Sales, { 
+    User.hasMany(models.sales, { 
       foreignKey: 'userId', 
-      as: 'user' 
+      as: 'sale_users' 
+    });
+    User.hasMany(models.sales, { 
+      foreignKey: 'sellerId', 
+      as: 'sale_sellers' 
     });
     }
 

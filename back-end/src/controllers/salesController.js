@@ -18,9 +18,18 @@ const getOrderById = async (_req = Request, res = Response) => {
   return res.status(200).json(orders);
 };  
 
-const getSaleProcudts = async (_req = Request, res = Response) => {
-  const orders = await salesService.getSaleProcudts();
+const getSaleProducts = async (_req = Request, res = Response) => {
+  const orders = await salesService.getSaleProducts();
   return res.status(200).json(orders);
 };
 
-module.exports = { registerOrders, getOrders, getOrderById, getSaleProcudts };
+const updateSaleStatus = async (req = Request, res = Response) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const sale = await salesService.updateSaleStatus(id, status);
+
+  return res.status(200).json(sale);
+};
+
+module.exports = { registerOrders, getOrders, getOrderById, getSaleProducts, updateSaleStatus };

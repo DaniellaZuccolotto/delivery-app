@@ -3,10 +3,10 @@ import { requestSaleProducts } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
 
 function SalesProductsCardDetails() {
-  const { products } = useContext(DeliveryContext);
+  const { saleDetails } = useContext(DeliveryContext);
   const tHead = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitário', 'Sub-total'];
-  console.log(products);
+  // console.log(saleDetails);
 
   const initProducts = async () => {
     const resultProducts = await requestSaleProducts();

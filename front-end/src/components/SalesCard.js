@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { requestSale } from '../utils/requestAPI';
 import DeliveryContext from '../provider/DeliveryContext';
-import formatDate from '../utils/formatDate';
+import dateFormater from '../utils/dateFormater';
 
 function SalesCard() {
   const { saleSeller, setSaleSeller, setSaleDetails } = useContext(DeliveryContext);
@@ -22,6 +22,8 @@ function SalesCard() {
     const sale = saleSeller.filter((sales) => sales.id === id);
     setSaleDetails(sale);
   };
+
+  console.log(saleSeller);
 
   return (
     <div>
@@ -48,7 +50,7 @@ function SalesCard() {
                 <td
                   data-testid={ `seller_orders__element-order-date-${sale.id}` }
                 >
-                  { formatDate(sale.saleDate) }
+                  { dateFormater(sale.saleDate) }
                 </td>
                 <td
                   data-testid={

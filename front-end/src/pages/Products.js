@@ -23,6 +23,8 @@ function Products() {
 
   const requestProduct = async () => {
     const returnProducts = await requestProducts();
+    console.log(returnProducts);
+    console.log('test');
     setProducts(returnProducts);
   };
 
