@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { requestSaleProducts } from '../utils/requestAPI';
-import DeliveryContext from '../provider/DeliveryContext';
+// import DeliveryContext from '../provider/DeliveryContext';
 
 function SalesProductsCardDetails() {
-  const { saleDetails } = useContext(DeliveryContext);
+  // const { saleDetails } = useContext(DeliveryContext);
   const tHead = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitário', 'Sub-total'];
   // console.log(saleDetails);

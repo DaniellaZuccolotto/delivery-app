@@ -6,14 +6,17 @@ const getOrders = async () => {
 };
 
 const getSaleProducts = async () => {
-  const orders = await salesProduct.findAll({ 
+  const orders = await sales.findAll({ 
     include: { model: products, as: 'products' }
    });
   return orders;
 };
 
 const getOrderById = async (id) => {
-  const orders = await sales.findOne({ where: { id } });
+  const orders = await sales.findOne({
+    where: { id },
+    include: { model: products, as: 'products' }
+  });
   return orders;
 };
 

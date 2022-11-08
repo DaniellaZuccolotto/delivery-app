@@ -1,19 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { requestOrder } from '../utils/requestAPI';
-import DeliveryContext from '../provider/DeliveryContext';
+import requestSeller, { requestOrder } from '../utils/requestAPI';
 import NavBar from '../components/NavBar';
 import dateFormater from '../utils/dateFormater';
 
 function OrderDetails() {
   const [order, setOrder] = useState([]);
-  const [orderProducts, setOrderProducts] = useState([]);
+  const [seller, setSeller] = useState();
   const { id } = useParams();
   const history = useNavigate();
+  const tHead = ['Item', 'Descrição', 'Quantidade',
+    'Valor Unitário', 'Sub-total'];
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const saveOrder = async () => {
-    setOrder([await requestOrder(id)]);
-    setOrderProducts();
+    const orderResponse = await requestOrder(id);
+    setOrder([orderResponse]);
+    const sellersResponse = await requestSeller();
+    setSeller(sellersResponse
+      .find(({ id: sellerId }) => sellerId === orderResponse.sellerId));
   };
 
   useEffect(() => {
@@ -38,7 +43,7 @@ function OrderDetails() {
              + 'element-order-details-label-seller-name' }
             >
               P.Vend:
-              { seller[0].name }
+              { seller ? seller.name : null }
             </td>
             <td
               data-testid="customer_order_details__element-order-details-label-order-date"
@@ -54,7 +59,7 @@ function OrderDetails() {
 
             <button
               type="button"
-              disabled="true"
+              disabled={ orders.status === 'Entregue' }
               data-testid="customer_order_details__button-delivery-check"
             >
               Marcar como entregue
@@ -68,7 +73,7 @@ function OrderDetails() {
         </tr>
       </thead>
       <tbody>
-        {productsCart.map((product, i) => (
+        { order.length === 0 ? null : order[0].products.map((product, i) => (
           <tr key={ i }>
             <td
               data-testid={
@@ -80,26 +85,27 @@ function OrderDetails() {
             <td
               data-testid={ `customer_order_details__element-order-table-name-${i}` }
             >
-              { product }
+              { product.name }
             </td>
             <td
               data-testid={ `customer_order_details__element-order-table-quantity-${i}` }
             >
-              { productsValues[i].quantity }
+              { product.salesProduct.quantity }
             </td>
             <td
               data-testid={
                 `customer_order_details__element-order-table-unit-price-${i}`
               }
             >
-              { productsValues[i].price.toFixed(2).replace('.', ',') }
+              { Number(product.price).toFixed(2).replace('.', ',') }
             </td>
             <td
               data-testid={
                 `customer_order_details__element-order-table-sub-total-${i}`
               }
             >
-              { productsValues[i].total.toFixed(2).replace('.', ',') }
+              { (product.price * product.salesProduct.quantity)
+                .toFixed(2).replace('.', ',') }
             </td>
           </tr>
         ))}
@@ -108,8 +114,8 @@ function OrderDetails() {
         data-testid="customer_order_details__element-order-total-price"
       >
         Total:
-        { productsValues.reduce((acc, curr) => acc + curr.total, 0)
-          .toFixed(2).replace('.', ',') }
+        { order.length === 0 ? null : order[0].totalPrice
+          .replace('.', ',') }
       </p>
     </div>
   );
