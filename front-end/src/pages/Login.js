@@ -47,6 +47,8 @@ function Login() {
     const user = await requestUser();
     if (!user) {
       history('/login');
+    } if (user.role === 'administrator') {
+      history('/admin/manage');
     } else {
       localStorage.setItem('user', JSON.stringify(user));
       history('/customer/products');
@@ -96,7 +98,7 @@ function Login() {
         <button
           type="submit"
           data-testid="common_login__button-register"
-          // onClick={ handleClick }
+          onClick={ () => history('/register') }
         >
           Ainda não tenho conta
         </button>
