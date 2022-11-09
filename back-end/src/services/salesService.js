@@ -7,7 +7,7 @@ const getOrders = async () => {
 
 const getSaleProducts = async () => {
   const orders = await sales.findAll({ 
-    include: { model: products, as: 'products' }
+    include: { model: products, as: 'products' },
    });
   return orders;
 };
@@ -15,7 +15,7 @@ const getSaleProducts = async () => {
 const getOrderById = async (id) => {
   const orders = await sales.findOne({
     where: { id },
-    include: { model: products, as: 'products' }
+    include: { model: products, as: 'products' },
   });
   return orders;
 };
@@ -23,12 +23,12 @@ const getOrderById = async (id) => {
 const registerOrders = async (bodyProducts, bodySales) => {
   const order = await sales.create(bodySales);
   const { id } = order.dataValues;
-  const products = bodyProducts.productId.map((product, index) => ({
+  const productsObj = bodyProducts.productId.map((product, index) => ({
     saleId: id,
     productId: product,
     quantity: bodyProducts.quantity[index],
   }));
-  const createProducts = products.map((product) => salesProduct.create(product));
+  const createProducts = productsObj.map((product) => salesProduct.create(product));
   const result = await Promise.all(createProducts);
   const salesProducts = result.map((product) => product.dataValues);
   return { orders: order.dataValues, salesProducts };
@@ -39,7 +39,7 @@ const updateSaleStatus = async (id, status) => {
    
    const sale = await sales.findOne({
     where: { id },
-    include: { model: products, as: 'products' }
+    include: { model: products, as: 'products' },
   });
    
    return sale;
