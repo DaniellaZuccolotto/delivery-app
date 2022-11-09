@@ -35,7 +35,12 @@ const registerOrders = async (bodyProducts, bodySales) => {
 };
 
 const updateSaleStatus = async (id, status) => {
-   const sale = await sales.update({ status }, { where: { id }, returning: true, plain: true });
+   await sales.update({ status }, { where: { id } });
+   
+   const sale = await sales.findOne({
+    where: { id },
+    include: { model: products, as: 'products' }
+  });
    
    return sale;
 };

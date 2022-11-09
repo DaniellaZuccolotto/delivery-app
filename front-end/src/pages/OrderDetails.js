@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import requestSeller, { requestOrder } from '../utils/requestAPI';
+import requestSeller, { requestOrder, updateSaleStatus } from '../utils/requestAPI';
 import NavBar from '../components/NavBar';
 import dateFormater from '../utils/dateFormater';
 
@@ -19,6 +19,11 @@ function OrderDetails() {
     const sellersResponse = await requestSeller();
     setSeller(sellersResponse
       .find(({ id: sellerId }) => sellerId === orderResponse.sellerId));
+  };
+
+  const handleDeliveryCheckButton = async () => {
+    const updatedSale = await updateSaleStatus(id, 'Entregue');
+    setOrder([updatedSale]);
   };
 
   useEffect(() => {
@@ -59,7 +64,8 @@ function OrderDetails() {
 
             <button
               type="button"
-              disabled={ orders.status === 'Entregue' }
+              disabled={ ['Pendente', 'Preparando', 'Entregue'].includes(orders.status) }
+              onClick={ handleDeliveryCheckButton }
               data-testid="customer_order_details__button-delivery-check"
             >
               Marcar como entregue
