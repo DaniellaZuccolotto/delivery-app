@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const registerUser = async (userInfos) => axios.post('/users/register', {
-  ...userInfos,
-});
+const registerUser = async (user) => axios.post('http://localhost:3001/register', user);
 
 export default registerUser;

@@ -10,17 +10,21 @@ function Register() {
   const form = useForm({ mode: 'onChange' });
   const navigate = useNavigate();
 
-  const [errMessage, setErrMessage] = useState('');
+  const [errMessage, setErrMessage] = useState();
+  const [invalidUser, setInvalidUser] = useState(false);
 
   const { isValid } = form.formState;
 
-  const formSubmitFunction = async (userInfos) => {
+  const formSubmitFunction = async (user) => {
     try {
-      const { data } = await registerUser(userInfos);
+      const { data } = await registerUser({ ...user, role: 'customer' });
+      console.log(data);
       setStorage('user', data);
       navigate('/customer/products');
     } catch (err) {
-      setErrMessage(err.response.data.message);
+      console.log(err);
+      setErrMessage(err.response.data);
+      setInvalidUser(true);
     }
   };
 
@@ -51,7 +55,7 @@ function Register() {
       </form>
       <div>
         {
-          errMessage.length > 0
+          invalidUser
           && <p data-testid="common_register__element-invalid_register">{ errMessage }</p>
         }
       </div>
