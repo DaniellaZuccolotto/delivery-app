@@ -8,6 +8,9 @@ import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';
 import Register from './pages/Register';
 import Admin from './pages/Admin';
+import SellerOrders from './pages/SellerOrders';
+import SellerOrdersDetails from './pages/SellerOrdersDetails';
+import CustomerOrders from './pages/CustomerOrders';
 
 function App() {
   return (
@@ -19,7 +22,10 @@ function App() {
         <Route exact path="/customer/products" element={ <Products /> } />
         <Route exact path="/register" element={ <Register /> } />
         <Route exact path="/customer/checkout" element={ <Checkout /> } />
+        <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
         <Route exact path="/customer/orders/:id" element={ <OrderDetails /> } />
+        <Route exact path="/seller/orders" element={ <SellerOrders /> } />
+        <Route exact path="/seller/orders/:id" element={ <SellerOrdersDetails /> } />
       </Routes>
     </DeliveryContextProvider>
 

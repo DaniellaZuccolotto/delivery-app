@@ -14,6 +14,8 @@ function Login() {
     if (!pathname.includes('/login')) {
       history('/login');
     }
+    // esse if faz com que o usuário seja redirecionado para a tela de produtos caso já esteja logado
+    if (JSON.parse(localStorage.getItem('user'))) history('/customer/products');
   });
 
   const handleChange = ({ target: { value, name } }) => {
@@ -47,11 +49,21 @@ function Login() {
     const user = await requestUser();
     if (!user) {
       history('/login');
-    } if (user.role === 'administrator') {
+      return null;
+    }
+    localStorage.setItem('user', JSON.stringify(user));
+    switch (user.role) {
+    case 'seller':
+      history('/seller/orders');
+      break;
+    case 'administrator':
       history('/admin/manage');
-    } else {
-      localStorage.setItem('user', JSON.stringify(user));
+      break;
+    case 'customer':
       history('/customer/products');
+      break;
+    default:
+      break;
     }
   };
 

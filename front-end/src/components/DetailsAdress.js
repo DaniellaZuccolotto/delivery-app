@@ -32,6 +32,7 @@ function DetailsAdress() {
     try {
       const seller = await requestSeller();
       setSellers(seller);
+      localStorage.setItem('vendedor', JSON.stringify(seller));
       return seller;
     } catch (error) {
       console.log(error);
