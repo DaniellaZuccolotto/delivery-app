@@ -11,7 +11,6 @@ import Admin from './pages/Admin';
 import SellerOrders from './pages/SellerOrders';
 import SellerOrdersDetails from './pages/SellerOrdersDetails';
 import CustomerOrders from './pages/CustomerOrders';
-import Register from './pages/Register';
 
 function App() {
   return (
