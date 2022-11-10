@@ -105,4 +105,15 @@ export const updateSaleStatus = async (id, status) => {
   }
 };
 
+export const createUser = async (body) => {
+  try {
+    const URL = 'http://localhost:3001/register';
+    const response = await axios.post(URL, body);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default requestSeller;

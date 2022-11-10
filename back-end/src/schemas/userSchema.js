@@ -25,7 +25,6 @@ const userSchema = joi.object().keys({
     .string()
     .required()
     .empty('')
-    .max(6)
     .messages({
       'any.required': '400|"password" is required',
       'any.empty': '400|"password" cannot be empty',

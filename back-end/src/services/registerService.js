@@ -1,12 +1,15 @@
 const md5 = require('md5');
 const { users, Sequelize } = require('../database/models');
 const { userSchema } = require('../schemas');
+const createToken = require('../utils/createToken');
 
 const createUser = async (user) => {
   // faz a validação do formato dos dados de entrada
+  console.log(user);
   const { error } = userSchema.validate(user);
   if (error) {
-    const [code, message] = error.message.split('|');
+    console.log(error);
+    const [code, message] = error.message.split('|');    
     return { code: Number(code), message };
   }
 
@@ -18,8 +21,10 @@ const createUser = async (user) => {
   if (result) return { code: 409, message: 'User already exists' };
 
   // cria o novo usuário no banco de dados
-  await users.create({ name, email, password: md5(password), role });
-  return { code: 201, message: 'Successfully created' };
+  const returnUser = await users.create({ name, email, password: md5(password), role });
+  const token = createToken(returnUser.dataValues);
+  const message = { ...returnUser.dataValues, token };
+  return { code: 201, message };
 };
 
 const getSellers = async () => {

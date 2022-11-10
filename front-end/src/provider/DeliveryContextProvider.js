@@ -8,6 +8,13 @@ function DeliveryContextProvider({ children }) {
     password: '',
   });
 
+  const [newUser, setnewUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'customer',
+  });
+
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [displayParagrafo, setDisplay] = useState(false);
@@ -48,8 +55,10 @@ function DeliveryContextProvider({ children }) {
     setSaleSeller,
     saleDetails,
     setSaleDetails,
+    newUser,
+    setnewUser,
   }), [loginData, displayParagrafo, products, totalPrice, productsCart,
-    sale, saleProducts, saleSeller, saleDetails]);
+    sale, saleProducts, saleSeller, saleDetails, newUser]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>

@@ -110,7 +110,7 @@ function Login() {
         <button
           type="submit"
           data-testid="common_login__button-register"
-          // onClick={ handleClick }
+          onClick={ () => history('/register') }
         >
           Ainda não tenho conta
         </button>
