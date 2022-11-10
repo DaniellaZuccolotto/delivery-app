@@ -19,7 +19,9 @@ const createUser = async (user) => {
      });
   if (result) return { code: 409, message: 'User already exists' };
   // cria o novo usuário no banco de dados
-  const returnUser = await users.create({ name, email, password: md5(password), role: role || 'customer' });
+  const returnUser = await users.create({ 
+    name, email, password: md5(password), role: role || 'customer', 
+  });
   const token = createToken(returnUser.dataValues);
   const message = { ...returnUser.dataValues, token };
   return { code: 201, message };

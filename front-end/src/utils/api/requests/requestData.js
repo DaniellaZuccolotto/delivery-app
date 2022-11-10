@@ -1,17 +1,13 @@
 import axios from 'axios';
 
 const requestData = async (endpoint) => {
-  const { data } = await axios.get(endpoint);
   const { token } = JSON.parse(localStorage.getItem('user'));
-  const response = await axios.post(
-    data,
-    {
-      headers: {
-        Authorization: token,
-      },
+  const result = await axios.get(endpoint, {
+    headers: {
+      Authorization: token,
     },
-  );
-  return response.data;
+  });
+  return result.data;
 };
 
 export default requestData;

@@ -3,15 +3,14 @@ import FormAdmin from '../components/FormAdmin/FormAdmin';
 import TableUsers from '../components/FormAdmin/TableUsers';
 import requestData from '../utils/api/requests/requestData';
 import requestDelete from '../utils/api/requests/requestDelete';
-import requestCreate from '../utils/api/requests/requestCreate';
+import registerUser from '../utils/api/requests/registerUser';
 
 function Admin() {
   const [usersApi, setUsersApi] = useState([]);
   const [failedTryCreate, setFailedTryCreate] = useState(false);
 
   const apiData = async () => {
-    const data = await requestData('http://localhost:3001/admin/manage');
-
+    const data = await requestData('http://localhost:3001/users');
     setUsersApi(data);
   };
 
@@ -24,8 +23,8 @@ function Admin() {
         role,
       };
 
-      await requestCreate('/adm', body);
-
+      const result = await registerUser(body);
+      if (!result) { setFailedTryCreate(true); }
       apiData();
     } catch (error) {
       setFailedTryCreate(true);
@@ -51,7 +50,7 @@ function Admin() {
   return (
     <>
       {
-        (failedTryCreate)
+        failedTryCreate
           ? (
             <p data-testid="admin_manage__element-invalid-register">
               {
