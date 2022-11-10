@@ -9,19 +9,17 @@ const createUser = async (user) => {
   const { error } = userSchema.validate(user);
   if (error) {
     console.log(error);
-    const [code, message] = error.message.split('|');    
+    const [code, message] = error.message.split('|');
     return { code: Number(code), message };
   }
-
   // verifica se o usuário já existe no banco de dados
   const { name, email, password, role } = user;
   const result = await users.findOne({
     where: Sequelize.or({ name, email }), // material sobre uso do Sequelize.or: https://stackoverflow.com/questions/20695062/sequelize-or-condition-object#:~:text=Use%20Sequelize.or,%3A%2010%20%7D%20%7D%0A%20%20%20%20)%0A%20%20)%0A%7D%3B
      });
   if (result) return { code: 409, message: 'User already exists' };
-
   // cria o novo usuário no banco de dados
-  const returnUser = await users.create({ name, email, password: md5(password), role });
+  const returnUser = await users.create({ name, email, password: md5(password), role: role || 'customer' });
   const token = createToken(returnUser.dataValues);
   const message = { ...returnUser.dataValues, token };
   return { code: 201, message };

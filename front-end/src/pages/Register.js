@@ -1,90 +1,65 @@
-import React, { useContext } from 'react';
-// import { useLocation } from 'react-router-dom';
-import DeliveryContext from '../provider/DeliveryContext';
-import { createUser } from '../utils/requestAPI';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { EmailInput, PasswordInput, NameInput } from '../components/Inputs/Register';
+import Button from '../components/Button/Button';
+import registerUser from '../utils/api/requests/registerUser';
+import setStorage from '../utils/storange/setStorange';
 
 function Register() {
-  const { newUser, setnewUser } = useContext(DeliveryContext);
-  const { name, email, password } = newUser;
-  // const history = useNavigate();
-  // const { pathname } = useLocation();
-  // const [invalidUser, setInvalidUser] = useState(false);
+  const form = useForm({ mode: 'onChange' });
+  const navigate = useNavigate();
 
-  const handleChange = ({ target: { value, name: Name } }) => {
-    setnewUser((prevState) => ({
-      ...prevState,
-      [Name]: value,
-    }));
-  };
+  const [errMessage, setErrMessage] = useState();
+  const [invalidUser, setInvalidUser] = useState(false);
 
-  const disabledBtn = () => {
-    const validateEmail = /^[\w+.]+@\w+\.\w{2,}/;
-    const PASSWORD_LENGTH = 6;
-    const NOME_LENGTH = 12;
-    return (validateEmail.test(email) && password.length >= PASSWORD_LENGTH
-      && name.length >= NOME_LENGTH);
-  };
+  const { isValid } = form.formState;
 
-  const handleClick = async () => {
-    const user = await createUser(newUser);
-    console.log(user);
-    localStorage.setItem('user', JSON.stringify(user));
-    // history('/customer/products');
+  const formSubmitFunction = async (user) => {
+    try {
+      const { data } = await registerUser({ ...user, role: 'customer' });
+      console.log(data);
+      setStorage('user', data);
+      navigate('/customer/products');
+    } catch (err) {
+      console.log(err);
+      setErrMessage(err.response.data);
+      setInvalidUser(true);
+    }
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="name">
-          <input
-            name="name"
-            value={ name }
-            onChange={ handleChange }
-            type="name"
-            id="name"
-            placeholder="Seu nome"
-            data-testid="common_register__input-name"
-          />
-        </label>
-        <label htmlFor="email">
-          <input
-            name="email"
-            value={ email }
-            onChange={ handleChange }
-            type="email"
-            id="email"
-            placeholder="E-mail"
-            data-testid="common_register__input-email"
-          />
-        </label>
-        <label htmlFor="password">
-          <input
-            name="password"
-            value={ password }
-            onChange={ handleChange }
-            type="password"
-            id="password"
-            placeholder="Password"
-            data-testid="common_register__input-password"
-          />
-        </label>
-        <button
-          type="submit"
-          data-testid="common_register__button-register"
-          disabled={ !disabledBtn() }
-          onClick={ handleClick }
-        >
-          Cadastrar
-        </button>
-        {/* { invalidUser
-        && (
-          <p
-            data-testid="common_register__element-invalid_register"
-          >
-            Usuário inválido
-          </p>)} */}
+    <>
+      <form onSubmit={ form.handleSubmit(formSubmitFunction) }>
+        <NameInput
+          dataId="common_register__input-name"
+          handleForm={ form }
+        />
+
+        <EmailInput
+          dataId="common_register__input-email"
+          handleForm={ form }
+        />
+
+        <PasswordInput
+          dataId="common_register__input-password"
+          handleForm={ form }
+        />
+
+        <Button
+          isSubmit
+          disable={ !isValid }
+          text="CADASTRAR"
+          dataId="common_register__button-register"
+        />
       </form>
-    </div>
+      <div>
+        {
+          invalidUser
+          && <p data-testid="common_register__element-invalid_register">{ errMessage }</p>
+        }
+      </div>
+    </>
   );
 }
 
