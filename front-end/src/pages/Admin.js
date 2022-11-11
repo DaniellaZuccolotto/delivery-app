@@ -3,7 +3,7 @@ import FormAdmin from '../components/FormAdmin/FormAdmin';
 import TableUsers from '../components/FormAdmin/TableUsers';
 import requestData from '../utils/api/requests/requestData';
 import requestDelete from '../utils/api/requests/requestDelete';
-import registerUser from '../utils/api/requests/registerUser';
+import { registerUserAdm } from '../utils/api/requests/registerUser';
 
 function Admin() {
   const [usersApi, setUsersApi] = useState([]);
@@ -23,7 +23,7 @@ function Admin() {
         role,
       };
 
-      const result = await registerUser(body);
+      const result = await registerUserAdm(body);
       if (!result) { setFailedTryCreate(true); }
       apiData();
     } catch (error) {
