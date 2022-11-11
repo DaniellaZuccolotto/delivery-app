@@ -35,7 +35,7 @@ function Admin() {
     try {
       console.log(email);
 
-      await requestDelete(`/adm/${email}`);
+      await requestDelete({ email });
 
       apiData();
     } catch (error) {
