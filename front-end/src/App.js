@@ -28,7 +28,6 @@ function App() {
         <Route exact path="/seller/orders/:id" element={ <SellerOrdersDetails /> } />
       </Routes>
     </DeliveryContextProvider>
-
   // <div className="App">
   //   <span className="logo">TRYBE</span>
   //   <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>

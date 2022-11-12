@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 function Button({ text, onClick, isSubmit, disable, dataId }) {
   return (
     <button
+      className="bg-[#01264e] hover:bg-sky-700 mt-10
+        rounded-md w-56 h-7 mx-auto text-white text-sm"
       type={ isSubmit ? 'submit' : 'button' }
       onClick={ onClick }
       disabled={ disable }

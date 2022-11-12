@@ -5,6 +5,7 @@ import { EmailInput, PasswordInput, NameInput } from '../components/Inputs/Regis
 import Button from '../components/Button/Button';
 import registerUser from '../utils/api/requests/registerUser';
 import setStorage from '../utils/storange/setStorange';
+import delivery2 from '../images/delivery2.png';
 
 function Register() {
   const form = useForm({ mode: 'onChange' });
@@ -29,8 +30,23 @@ function Register() {
   };
 
   return (
-    <>
-      <form onSubmit={ form.handleSubmit(formSubmitFunction) }>
+    <div
+      className="bg-gradient-to-r from-[#e99b9b] to-[#e9e38e]
+    w-full h-screen flex justify-center"
+    >
+      <img src={ delivery2 } alt="delivery" className="w-96 h-96 mx-auto mt-36" />
+      <form
+        className="align-middle flex border-[1px] border-[#060605]
+        shadow-xl
+        shadow-slate-500
+          flex-col w-96 h-96 mt-36 justify-center rounded-2xl mr-64"
+        onSubmit={ form.handleSubmit(formSubmitFunction) }
+      >
+        <h1
+          className="text-center text-2xl font-bold text-cyan-900 mb-5"
+        >
+          FAÇA SEU CADASTRO
+        </h1>
         <NameInput
           dataId="common_register__input-name"
           handleForm={ form }
@@ -59,7 +75,7 @@ function Register() {
           && <p data-testid="common_register__element-invalid_register">{ errMessage }</p>
         }
       </div>
-    </>
+    </div>
   );
 }
 

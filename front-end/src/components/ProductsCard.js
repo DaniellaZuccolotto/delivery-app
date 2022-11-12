@@ -60,62 +60,76 @@ function ProductsCard({ products }) {
   };
 
   return (
-    <div>
+    <div
+      className="flex justify-center bg-white w-48 h-56 items-center
+      border-[1px] border-[#cccaca] shadow-md
+      shadow-slate-300 m-3 rounded-lg"
+    >
       { !products ? <h1>Loading...</h1>
         : (
-          <main>
-            <span
-              data-testid={ `customer_products__element-card-title-${id}` }
-            >
-              { name }
-            </span>
-            <span
-              data-testid={ `customer_products__element-card-price-${id}` }
-            >
-              { price.replace('.', ',') }
-            </span>
+          <main className="w-52 h-52 flex flex-col justify-center items-center">
             <img
+              className={ name === 'Skol Lata 250ml' ? 'w-16 h-28' : 'w-32 h-28' }
               data-testid={ `customer_products__img-card-bg-image-${id}` }
               src={ urlImage }
               alt={ name }
-              style={ { width: '100px' } }
             />
-            <button
-              type="button"
-              name={ name }
-              data-testid={ `customer_products__button-card-rm-item-${id}` }
-              onClick={ ({ target: { name: nameInput } }) => {
-                if (qtd > 0) {
-                  setQtd(qtd - 1);
-                  saveItensCartSub(nameInput);
-                }
-              } }
-            >
-              -
-            </button>
-            <label htmlFor={ name }>
-              <input
-                name={ name }
-                value={ qtd }
-                type="number"
-                onChange={ ({ target: { value, name: nameInput } }) => {
-                  setQtd(Number(value));
-                  saveItensCart(value, nameInput);
-                } }
-                data-testid={ `customer_products__input-card-quantity-${id}` }
-              />
-            </label>
-            <button
-              type="button"
-              name={ name }
-              data-testid={ `customer_products__button-card-add-item-${id}` }
-              onClick={ ({ target: { name: nameInput } }) => {
-                setQtd(qtd + 1);
-                saveItensCartSum(nameInput);
-              } }
-            >
-              +
-            </button>
+            <div className="flex flex-col justify-center items-center">
+              <span
+                data-testid={ `customer_products__element-card-title-${id}` }
+              >
+                { name }
+              </span>
+              <span
+                data-testid={ `customer_products__element-card-price-${id}` }
+              >
+                { price.replace('.', ',') }
+              </span>
+              <div
+                className="flex justify-between border-[1px]
+                border-[#aeacac] rounded-md h-6"
+              >
+                <button
+                  type="button"
+                  className="bg-[#cccaca] hover:bg-[#838383] w-7 h-6 rounded-l-md"
+                  name={ name }
+                  data-testid={ `customer_products__button-card-rm-item-${id}` }
+                  onClick={ ({ target: { name: nameInput } }) => {
+                    if (qtd > 0) {
+                      setQtd(qtd - 1);
+                      saveItensCartSub(nameInput);
+                    }
+                  } }
+                >
+                  -
+                </button>
+                <label htmlFor={ name }>
+                  <input
+                    name={ name }
+                    value={ qtd }
+                    type="number"
+                    className="w-10 text-center ml-2 h-5"
+                    onChange={ ({ target: { value, name: nameInput } }) => {
+                      setQtd(Number(value));
+                      saveItensCart(value, nameInput);
+                    } }
+                    data-testid={ `customer_products__input-card-quantity-${id}` }
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="bg-[#cccaca] hover:bg-[#838383] w-7 rounded-r-md h-6"
+                  name={ name }
+                  data-testid={ `customer_products__button-card-add-item-${id}` }
+                  onClick={ ({ target: { name: nameInput } }) => {
+                    setQtd(qtd + 1);
+                    saveItensCartSum(nameInput);
+                  } }
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </main>
         )}
     </div>
