@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+const LABEL_STYLE = 'flex flex-col w-[40%] text-sm m-1';
+const INPUT_STYLE = `px-[5px] py-[2px] text-base border-solid border-[1px]
+border-gray-400 rounded-md`;
+
 function FormAdmin({ createUser }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -66,22 +70,31 @@ function FormAdmin({ createUser }) {
   };
 
   return (
-    <form>
-      <h1> Cadastrar novo usuário </h1>
-      <label htmlFor="name-input">
+    <form
+      className="flex justify-center flex-col bg-[#e8e8e7] w-[100%] items-center
+    border-[1px] border-[#cccaca] shadow-md
+    shadow-slate-300 rounded-lg"
+    >
+      <h1 className="m-3 text-lg font-bold"> Cadastrar novo usuário </h1>
+      <label
+        htmlFor="name-input"
+        className={ LABEL_STYLE }
+      >
         Nome:
         <input
+          className={ INPUT_STYLE }
           type="text"
           onChange={ (e) => verifyName(e.target.value) }
           onBlur={ (e) => setName(e.target.value) }
-          placeholder="Nome"
+          placeholder="Fulana da Silva Beltrana"
           name="name"
           data-testid="admin_manage__input-name"
         />
       </label>
-      <label htmlFor="email-input">
+      <label htmlFor="email-input" className={ LABEL_STYLE }>
         Email:
         <input
+          className={ INPUT_STYLE }
           type="text"
           onChange={ (e) => verifyEmail(e.target.value) }
           onBlur={ (e) => setEmail(e.target.value) }
@@ -90,9 +103,10 @@ function FormAdmin({ createUser }) {
           data-testid="admin_manage__input-email"
         />
       </label>
-      <label htmlFor="password-input">
+      <label htmlFor="password-input" className={ LABEL_STYLE }>
         Senha:
         <input
+          className={ INPUT_STYLE }
           type="password"
           onChange={ (e) => verifyPassword(e.target.value) }
           onBlur={ (e) => setPassword(e.target.value) }
@@ -100,9 +114,10 @@ function FormAdmin({ createUser }) {
           data-testid="admin_manage__input-password"
         />
       </label>
-      <label htmlFor="role-input">
+      <label htmlFor="role-input" className={ LABEL_STYLE }>
         Tipo:
         <select
+          className={ INPUT_STYLE }
           data-testid="admin_manage__select-role"
           onChange={ (e) => setRole(e.target.value) }
           defaultValue="administrator"
@@ -113,6 +128,9 @@ function FormAdmin({ createUser }) {
         </select>
       </label>
       <button
+        className="self-center text-center border-[3px] bg-[#edbe47]
+        border-[#cccaca] hover:bg-[#a37b15] shadow-md
+        shadow-slate-300 m-3 w-40 h-9 text-md font-medium rounded-lg"
         data-testid="admin_manage__button-register"
         type="submit"
         onClick={ (event) => createUserVerify(event) }
