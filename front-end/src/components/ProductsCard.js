@@ -76,11 +76,13 @@ function ProductsCard({ products }) {
             />
             <div className="flex flex-col justify-center items-center">
               <span
+                className="self-center text-center"
                 data-testid={ `customer_products__element-card-title-${id}` }
               >
                 { name }
               </span>
               <span
+                className="self-center"
                 data-testid={ `customer_products__element-card-price-${id}` }
               >
                 { price.replace('.', ',') }

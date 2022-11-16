@@ -10,11 +10,11 @@ function Checkout() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <NavBar user={ user } history={ history } />
-      <h2>Finalizar Pedido</h2>
+      <h2 className="pt-16 text-xl self-start pl-40">Finalizar Pedido</h2>
       <ProductsList />
-      <h2>Detalhes e Endereço para Entrega</h2>
+      <h2 className="pt-4 text-xl self-start pl-40">Detalhes e Endereço para Entrega</h2>
       <DetailsAdress />
     </div>
   );

@@ -61,10 +61,18 @@ function DetailsAdress() {
   };
 
   return (
-    <div>
-      <label htmlFor="sellerId">
+    <div
+      className={ `flex flex-col items-center bg-[#e8e8e7] border-[1px] border-[#cccaca]
+        shadow-lg shadow-slate-300 w-[60rem] h-48` }
+    >
+      <label
+        className="text-center border-[1px] w-[28rem] mt-2 pt-2 h-10
+        border-[#cccaca] shadow-md shadow-slate-300"
+        htmlFor="sellerId"
+      >
         P.Vendedora Responsável:
         <select
+          className="ml-5 w-40 text-center border-[1px] border-black"
           name="sellerId"
           data-testid="customer_checkout__select-seller"
           onChange={ onChangeSeller }
@@ -77,9 +85,15 @@ function DetailsAdress() {
           )) }
         </select>
       </label>
-      <label htmlFor="deliveryAddress">
+      <label
+        className="text-center border-[1px] w-[28rem] mt-2 pt-2 h-10
+          border-[#cccaca] shadow-md shadow-slate-300"
+        htmlFor="deliveryAddress"
+      >
         Endereço:
         <input
+          className="ml-5 w-60 text-center border-[1px]
+            border-[#cccaca] shadow-md shadow-slate-300"
           name="deliveryAddress"
           value={ sale.deliveryAddress }
           onChange={ handleChange }
@@ -88,9 +102,15 @@ function DetailsAdress() {
           data-testid="customer_checkout__input-address"
         />
       </label>
-      <label htmlFor="deliveryNumber">
+      <label
+        className="text-center border-[1px] w-[28rem] mt-2 pt-1 h-10
+         border-[#cccaca] shadow-md shadow-slate-300"
+        htmlFor="deliveryNumber"
+      >
         Número:
         <input
+          className="ml-7 w-60 text-center border-[1px]
+          border-[#cccaca] shadow-md shadow-slate-300"
           name="deliveryNumber"
           value={ sale.deliveryNumber }
           onChange={ handleChange }
@@ -100,6 +120,9 @@ function DetailsAdress() {
         />
       </label>
       <button
+        className="self-center text-center border-[3px] bg-[#edbe47]
+        border-[#cccaca] hover:bg-[#a37b15] shadow-md
+        shadow-slate-300 mt-2 w-40 h-9 text-md"
         type="button"
         data-testid="customer_checkout__button-submit-order"
         onClick={ finishSale }

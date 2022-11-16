@@ -31,10 +31,13 @@ function OrderDetails() {
   }, []);
 
   return (
-    <div>
+    <div div className="flex flex-col items-center">
       <NavBar user={ user } history={ history } />
-      <h1>Detalhe do Pedido</h1>
-      <section>
+      <h1 className="pt-16 text-xl self-start pl-44">Detalhes do Pedido</h1>
+      <section
+        className="flex justify-evenly items-center h-12 mt-3 mb-3
+        border-[1px] border-[#cccaca] shadow-lg shadow-slate-300 w-[58rem] bg-[#e8e8e7]"
+      >
         { order.map((orders, index) => (
           <>
             <td
@@ -63,25 +66,38 @@ function OrderDetails() {
             </td>
 
             <button
+              className="border-[3px] bg-[#edbe47] w-40 hover:bg-[#a37b15]
+              border-[#cccaca] shadow-md shadow-slate-300 text-md"
               type="button"
               disabled={ ['Pendente', 'Preparando', 'Entregue'].includes(orders.status) }
               onClick={ handleDeliveryCheckButton }
               data-testid="customer_order_details__button-delivery-check"
             >
-              Marcar como entregue
+              Confirmar entrega
             </button>
           </>
         ))}
       </section>
-      <thead>
-        <tr>
-          {tHead.map((coluns, i) => <th key={ i }>{coluns}</th>)}
+      <thead
+        className="flex self-center w-[52rem] h-10 border-b-[1px]
+        border-[#cccaca] shadow-md shadow-slate-300"
+      >
+        <tr className="self-center">
+          {tHead.map((coluns, i) => (
+            <th className="self-center w-52" key={ i }>{coluns}</th>))}
         </tr>
       </thead>
-      <tbody>
+      <tbody
+        className="flex flex-col items-center self-center w-[52rem]"
+      >
         { order.length === 0 ? null : order[0].products.map((product, i) => (
-          <tr key={ i }>
+          <tr
+            className="flex self-center w-[52rem] border-b-[3px]
+            border-[#cccaca] shadow-md shadow-slate-300 h-10"
+            key={ i }
+          >
             <td
+              className="self-center w-32 text-center pl-4"
               data-testid={
                 `customer_order_details__element-order-table-item-number-${i}`
               }
@@ -89,16 +105,19 @@ function OrderDetails() {
               { i + 1 }
             </td>
             <td
+              className="self-center w-64 text-center pr-3"
               data-testid={ `customer_order_details__element-order-table-name-${i}` }
             >
               { product.name }
             </td>
             <td
+              className="self-center w-32 text-center pr-12"
               data-testid={ `customer_order_details__element-order-table-quantity-${i}` }
             >
               { product.salesProduct.quantity }
             </td>
             <td
+              className="self-center w-36 text-center pl-4"
               data-testid={
                 `customer_order_details__element-order-table-unit-price-${i}`
               }
@@ -106,6 +125,7 @@ function OrderDetails() {
               { Number(product.price).toFixed(2).replace('.', ',') }
             </td>
             <td
+              className="self-center w-36 text-center pl-10"
               data-testid={
                 `customer_order_details__element-order-table-sub-total-${i}`
               }
@@ -117,6 +137,8 @@ function OrderDetails() {
         ))}
       </tbody>
       <p
+        className="self-end text-center border-[3px] bg-[#edbe47]
+          border-[#cccaca] shadow-md shadow-slate-300 mt-5 mr-56 w-40 h-9 text-xl"
         data-testid="customer_order_details__element-order-total-price"
       >
         Total:

@@ -12,20 +12,18 @@ function Products() {
   const history = useNavigate();
 
   const totalPriceLocal = () => {
-    const productsLocal = JSON.parse(localStorage.getItem('productsCart'));
-    if (!productsLocal) {
-      return 0;
-    }
-    const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
-    const productsValues = Object.values(Object.values(productsCartLocal[0]));
-    const total = productsValues.reduce((acc, curr) => acc + curr.total, 0);
-    setTotalPrice(total);
+    // const productsLocal = JSON.parse(localStorage.getItem('productsCart'));
+    // if (!productsLocal) {
+    //   return 0;
+    // }
+    // const productsCartLocal = [JSON.parse(localStorage.getItem('productsCart'))];
+    // const productsValues = Object.values(Object.values(productsCartLocal[0]));
+    // const total = productsValues.reduce((acc, curr) => acc + curr.total, 0);
+    setTotalPrice(0);
   };
 
   const requestProduct = async () => {
     const returnProducts = await requestProducts();
-    console.log(returnProducts);
-    console.log('test');
     setProducts(returnProducts);
   };
 

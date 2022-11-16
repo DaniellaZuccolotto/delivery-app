@@ -20,12 +20,12 @@ function CustomerOrders() {
   }, []);
 
   return (
-    <>
+    <div className="h-screen w-screen">
       <NavBar user={ user } history={ history } />
-      <main>
+      <main className="h-full w-screen pt-20">
         { orders.map((order) => <OrdersCard key={ order.id } order={ order } />) }
       </main>
-    </>
+    </div>
   );
 }
 

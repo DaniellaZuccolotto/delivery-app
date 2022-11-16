@@ -25,17 +25,37 @@ function ProductsList() {
   }, []);
 
   return (
-    <div className="mt-20">
-      <table>
-        <thead>
-          <tr>
-            {tHead.map((coluns, i) => <th key={ i }>{coluns}</th>)}
+    <div
+      className={ `flex flex-col bg-[#e8e8e7] border-[1px] border-[#cccaca]
+       shadow-lg shadow-slate-300 w-[60rem] h-80` }
+    >
+      <table className="flex flex-col">
+        <thead
+          className="flex self-center w-[60rem] h-10 border-b-[1px]
+        border-[#cccaca] shadow-md shadow-slate-300"
+        >
+          <tr className="self-center">
+            {tHead.map((coluns, i) => (
+              <th
+                className="self-center w-40"
+                key={ i }
+              >
+                {coluns}
+              </th>
+            ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          className="flex flex-col self-center h-10 w-[60rem]"
+        >
           {productsCart.map((product, index) => (
-            <tr key={ index }>
+            <tr
+              key={ index }
+              className="flex self-center w-[60rem] justify-center border-b-[3px]
+              border-[#cccaca] shadow-md shadow-slate-300"
+            >
               <td
+                className="self-center w-36 text-center pl-6"
                 data-testid={
                   `customer_checkout__element-order-table-item-number-${index}`
                 }
@@ -43,16 +63,19 @@ function ProductsList() {
                 { index + 1 }
               </td>
               <td
+                className="self-center w-60 text-center"
                 data-testid={ `customer_checkout__element-order-table-name-${index}` }
               >
                 { product }
               </td>
               <td
+                className="self-center w-40 text-center pr-6"
                 data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
               >
                 { productsValues[index].quantity }
               </td>
               <td
+                className="self-center w-44 text-center pr-4"
                 data-testid={
                   `customer_checkout__element-order-table-unit-price-${index}`
                 }
@@ -60,6 +83,7 @@ function ProductsList() {
                 { productsValues[index].price.toFixed(2).replace('.', ',') }
               </td>
               <td
+                className="self-center w-40 text-center pl-3"
                 data-testid={
                   `customer_checkout__element-order-table-sub-total-${index}`
                 }
@@ -71,8 +95,9 @@ function ProductsList() {
                   name={ product }
                   type="button"
                   data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-                  style={ { margin: '20px' } }
                   onClick={ removeItem }
+                  className="self-center text-white bg-[#b74c48]
+                    w-40 h-8 text-center hover:bg-[#8d211e]"
                 >
                   Remover
                 </button>
@@ -82,10 +107,12 @@ function ProductsList() {
         </tbody>
       </table>
       <p
+        className="self-end text-center border-[3px] bg-[#edbe47]
+        border-[#cccaca] shadow-md shadow-slate-300 mt-48 mr-10 w-40 h-9 text-xl"
         data-testid="customer_checkout__element-order-total-price"
       >
-        { productsValues.reduce((acc, curr) => acc + curr.total, 0)
-          .toFixed(2).replace('.', ',') }
+        { `Total: ${productsValues.reduce((acc, curr) => acc + curr.total, 0)
+          .toFixed(2).replace('.', ',')}` }
       </p>
     </div>
   );
