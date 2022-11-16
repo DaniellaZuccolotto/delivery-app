@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { requestSaleProducts } from '../utils/requestAPI';
-// import DeliveryContext from '../provider/DeliveryContext';
+import DeliveryContext from '../provider/DeliveryContext';
 
 function SalesProductsCardDetails() {
-  // const { saleDetails } = useContext(DeliveryContext);
+  const { listDetailsSale, setListDetailsSale,
+    saleDetails } = useContext(DeliveryContext);
+  const { pathname } = useLocation();
   const tHead = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitário', 'Sub-total'];
-  // console.log(saleDetails);
+
+  console.log(saleDetails);
 
   const initProducts = async () => {
+    const id = pathname.split('/')[3];
     const resultProducts = await requestSaleProducts();
-    console.log(resultProducts);
+    const filter = resultProducts.filter((product) => product.id === Number(id));
+    setListDetailsSale(filter[0].products);
   };
 
   useEffect(() => {
@@ -18,17 +24,34 @@ function SalesProductsCardDetails() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <table>
-        <thead>
-          <tr>
-            {tHead.map((coluns, i) => <th key={ i }>{coluns}</th>)}
+        <thead
+          className="flex self-center w-[52rem] h-10 border-b-[1px]
+           border-[#cccaca] shadow-md shadow-slate-300"
+        >
+          <tr className="self-center">
+            {tHead.map((coluns, i) => (
+              <th
+                className="self-center w-52"
+                key={ i }
+              >
+                {coluns}
+
+              </th>))}
           </tr>
         </thead>
-        {/* <tbody>
-          {productsCart.map((product, index) => (
-            <tr key={ index }>
+        <tbody
+          className="flex flex-col items-center self-center w-[52rem]"
+        >
+          {listDetailsSale.map((product, index) => (
+            <tr
+              className="flex self-center w-[52rem] border-b-[3px]
+            border-[#cccaca] shadow-md shadow-slate-300 h-10"
+              key={ index }
+            >
               <td
+                className="self-center w-32 text-center pl-4"
                 data-testid={
                   `customer_checkout__element-order-table-item-number-${index}`
                 }
@@ -36,39 +59,41 @@ function SalesProductsCardDetails() {
                 { index + 1 }
               </td>
               <td
+                className="self-center w-64 text-center pr-3"
                 data-testid={ `customer_checkout__element-order-table-name-${index}` }
               >
-                { product }
+                { product.name }
               </td>
               <td
+                className="self-center w-32 text-center pr-12"
                 data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
               >
-                { productsValues[index].quantity }
+                { product.salesProduct.quantity }
               </td>
               <td
-                data-testid={
-                  `customer_checkout__element-order-table-unit-price-${index}`
-                }
+                className="self-center w-36 text-center pl-4"
+                data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
               >
-                { productsValues[index].price.toFixed(2).replace('.', ',') }
+                { product.price }
               </td>
               <td
-                data-testid={
-                  `customer_checkout__element-order-table-sub-total-${index}`
-                }
+                className="self-center w-36 text-center pl-10"
+                data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
               >
-                { productsValues[index].total.toFixed(2).replace('.', ',') }
+                { (product.price * product.salesProduct.quantity)
+                  .toFixed(2).replace('.', ',') }
               </td>
             </tr>
           ))}
-        </tbody> */}
+        </tbody>
       </table>
-      {/* <p
+      <p
+        className="self-end text-center border-[3px] bg-[#edbe47]
+                border-[#cccaca] shadow-md shadow-slate-300 mt-5 w-40 h-9 text-xl"
         data-testid="customer_checkout__element-order-total-price"
       >
-        { productsValues.reduce((acc, curr) => acc + curr.total, 0)
-          .toFixed(2).replace('.', ',') }
-      </p> */}
+        { `Total: ${saleDetails[0].totalPrice}` }
+      </p>
     </div>
   );
 }

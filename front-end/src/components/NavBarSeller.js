@@ -1,25 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { requestSale } from '../utils/requestAPI';
-// import DeliveryContext from '../provider/DeliveryContext';
 
 function NavBarSeller() {
   const user = JSON.parse(localStorage.getItem('user'));
   const history = useNavigate();
-  // const currentURL = useLocation();
-
-  // const { setSaleSeller } = useContext(DeliveryContext);
-
-  // const requestAPI = async () => {
-  //   const { id } = JSON.parse(localStorage.getItem('user'));
-  //   const sales = await requestSale();
-  //   const saleSaller = sales.filter((sale) => sale.sellerId === id);
-  //   setSaleSeller(saleSaller);
-  // };
 
   return (
-    <div>
+    <div
+      className="bg-[#e8e8e7] border-b-[1px] border-[#cccaca] shadow-md
+    shadow-slate-300 mb-4 fixed
+      w-full h-12 flex justify-between items-center"
+    >
       <button
+        className="bg-[#cccaca] hover:bg-[#838383] w-36 h-12
+          text-[#181818] text-sm"
         type="submit"
         data-testid="customer_products__element-navbar-link-orders"
         onClick={ () => history('/seller/orders') }
@@ -29,9 +23,11 @@ function NavBarSeller() {
       <p
         data-testid="customer_products__element-navbar-user-full-name"
       >
-        { user.name }
+        { user.name.toUpperCase() }
       </p>
       <button
+        className="bg-[#cccaca] hover:bg-[#838383] w-36 h-12
+           text-[#181818] text-sm"
         type="button"
         data-testid="customer_products__element-navbar-link-logout"
         onClick={ () => {

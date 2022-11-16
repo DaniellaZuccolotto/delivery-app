@@ -36,6 +36,8 @@ function DeliveryContextProvider({ children }) {
   const [saleSeller, setSaleSeller] = useState([]);
   const [saleDetails, setSaleDetails] = useState([]);
 
+  const [listDetailsSale, setListDetailsSale] = useState([]);
+
   const contextValue = useMemo(() => ({
     loginData,
     displayParagrafo,
@@ -57,8 +59,10 @@ function DeliveryContextProvider({ children }) {
     setSaleDetails,
     newUser,
     setnewUser,
+    listDetailsSale,
+    setListDetailsSale,
   }), [loginData, displayParagrafo, products, totalPrice, productsCart,
-    sale, saleProducts, saleSeller, saleDetails, newUser]);
+    sale, saleProducts, saleSeller, saleDetails, newUser, listDetailsSale]);
 
   return (
     <DeliveryContext.Provider value={ contextValue }>
