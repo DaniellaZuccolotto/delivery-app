@@ -5,6 +5,8 @@ import requestData from '../utils/api/requests/requestData';
 import requestDelete from '../utils/api/requests/requestDelete';
 import { registerUserAdm } from '../utils/api/requests/registerUser';
 
+const TABLE_HEAD_DATA_STYLE = 'text-center font-semibold';
+
 function Admin() {
   const [usersApi, setUsersApi] = useState([]);
   const [failedTryCreate, setFailedTryCreate] = useState(false);
@@ -48,30 +50,43 @@ function Admin() {
   }, []);
 
   return (
-    <>
+    <div
+      className="w-[100%] px-[10%] py-[3%] flex justify-center flex-col"
+    >
+      <FormAdmin
+        createUser={ createUser }
+      />
       {
         failedTryCreate
           ? (
-            <p data-testid="admin_manage__element-invalid-register">
-              {
-                `Os dados já foram utilizados em uma outra conta,
-                  Por favor, tente novamente com outros dados.`
-              }
+            <p
+              data-testid="admin_manage__element-invalid-register"
+              className="my-5 self-center font-medium text-center"
+            >
+              Os dados já foram utilizados em uma outra conta.
+              <br />
+              Por favor, tente novamente com outros dados.
             </p>
           )
           : null
       }
-      <FormAdmin
-        createUser={ createUser }
-      />
-      <table>
-        <thead>
+      <h1 className="m-3 text-lg font-bold self-center mt-10"> Usuários cadastrados </h1>
+      <table
+        className="w-[80%] self-center"
+      >
+        <thead
+          className="bg-[#e8e8e7]"
+        >
           <tr>
-            <td>Item</td>
-            <td>Nome</td>
-            <td>E-mail</td>
-            <td>Tipo</td>
-            <td>Excluir</td>
+            <td className={ `${TABLE_HEAD_DATA_STYLE} rounded-tl-lg w-[10%]` }>ID</td>
+            <td className={ `${TABLE_HEAD_DATA_STYLE} w-[25%]` }>Nome</td>
+            <td className={ `${TABLE_HEAD_DATA_STYLE} w-[25%]` }>E-mail</td>
+            <td className={ `${TABLE_HEAD_DATA_STYLE} w-[25%]` }>Tipo</td>
+            <td
+              className={ `${TABLE_HEAD_DATA_STYLE} rounded-tr-lg w-[15%]` }
+            >
+              Excluir
+            </td>
           </tr>
         </thead>
         <tbody>
@@ -90,7 +105,7 @@ function Admin() {
             ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
 

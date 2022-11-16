@@ -7,19 +7,40 @@ function TableUsers({ id, name: nome, email, type, deleteUser, index }) {
   };
 
   return (
-    <tr key={ id }>
+    <tr
+      key={ id }
+      className="border-solid border-[#b8b8b8] border-t-[1px]"
+    >
       <td
-        data-testid={ `admin_manage__element-user-table-item-number-${index}` }
+        datatestid={ `admin_manage__element-user-table-item-number-${index}` }
+        className="text-center py-2"
       >
-        { index}
+        { index }
       </td>
-      <td data-testid={ `admin_manage__element-user-table-name-${index}` }>{ nome }</td>
-      <td data-testid={ `admin_manage__element-user-table-email-${index}` }>{ email}</td>
-      <td data-testid={ `admin_manage__element-user-table-role-${index}` }>{ type }</td>
-      <td>
-        <form>
+      <td
+        datatestid={ `admin_manage__element-user-table-name-${index}` }
+        className="text-center py-2"
+      >
+        { nome }
+      </td>
+      <td
+        datatestid={ `admin_manage__element-user-table-email-${index}` }
+        className="text-center py-2"
+      >
+        { email }
+      </td>
+      <td
+        datatestid={ `admin_manage__element-user-table-role-${index}` }
+        className="text-center py-2"
+      >
+        { type }
+      </td>
+      <td className="flex justify-center items-center py-2">
+        <form className="w-[100%] h-[100%]">
           <button
-            data-testid={ `admin_manage__element-user-table-remove-${index}` }
+            className="font-medium rounded-md text-white bg-[#b74c48]
+            w-[100%] h-[100%] text-center hover:bg-[#8d211e]"
+            datatestid={ `admin_manage__element-user-table-remove-${index}` }
             type="button"
             name={ email }
             onClick={ () => handleClick(email) }
