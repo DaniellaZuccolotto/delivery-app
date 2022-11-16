@@ -35,4 +35,18 @@ const getSellers = async () => {
   return { code: 200, sellers };
 };
 
-module.exports = { createUser, getSellers };
+const deleteUser = async (email) => {
+  const deletedRows = await users.destroy({ where: { email } });
+  if (deletedRows > 0) {
+    return {
+      code: 204,
+      message: `User with email "${email}" was successfully deleted!`,
+    };
+  }
+  return {
+    code: 404,
+    message: `No user with this email ("${email}") was found`,
+  };
+};
+
+module.exports = { createUser, getSellers, deleteUser };

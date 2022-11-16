@@ -2,28 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TableUsers({ id, name: nome, email, type, deleteUser, index }) {
-  const handleClick = async ({ target }) => {
-    const { name } = target;
-    deleteUser(name);
+  const handleClick = async (emailToDelete) => {
+    await deleteUser(emailToDelete);
   };
 
   return (
     <tr key={ id }>
       <td
-        datatestid={ `admin_manage__element-user-table-item-number-${index}` }
+        data-testid={ `admin_manage__element-user-table-item-number-${index}` }
       >
         { index}
       </td>
-      <td datatestid={ `admin_manage__element-user-table-name-${index}` }>{ nome }</td>
-      <td datatestid={ `admin_manage__element-user-table-email-${index}` }>{ email}</td>
-      <td datatestid={ `admin_manage__element-user-table-role-${index}` }>{ type }</td>
+      <td data-testid={ `admin_manage__element-user-table-name-${index}` }>{ nome }</td>
+      <td data-testid={ `admin_manage__element-user-table-email-${index}` }>{ email}</td>
+      <td data-testid={ `admin_manage__element-user-table-role-${index}` }>{ type }</td>
       <td>
         <form>
           <button
-            datatestid={ `admin_manage__element-user-table-remove-${index}` }
+            data-testid={ `admin_manage__element-user-table-remove-${index}` }
             type="button"
             name={ email }
-            onClick={ (e) => handleClick(e) }
+            onClick={ () => handleClick(email) }
           >
             Excluir
           </button>
