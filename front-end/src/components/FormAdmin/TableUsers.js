@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function TableUsers({ id, name: nome, email, type, deleteUser, index }) {
-  const handleClick = async ({ target }) => {
-    const { name } = target;
-    deleteUser(name);
+  const handleClick = async (emailToDelete) => {
+    await deleteUser(emailToDelete);
   };
 
   return (
@@ -44,7 +43,7 @@ function TableUsers({ id, name: nome, email, type, deleteUser, index }) {
             datatestid={ `admin_manage__element-user-table-remove-${index}` }
             type="button"
             name={ email }
-            onClick={ (e) => handleClick(e) }
+            onClick={ () => handleClick(email) }
           >
             Excluir
           </button>

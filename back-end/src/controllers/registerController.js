@@ -14,4 +14,10 @@ const getSellers = async (_req = Request, res = Response) => {
   return res.status(code).json(sellers);
 };
 
-module.exports = { createUser, getSellers };
+const deleteUser = async (req = Request, res = Response) => {
+  const { email } = req.body;
+  const { code, message } = await registerService.deleteUser(email);
+  return res.status(code).json({ message });
+};
+
+module.exports = { createUser, getSellers, deleteUser };

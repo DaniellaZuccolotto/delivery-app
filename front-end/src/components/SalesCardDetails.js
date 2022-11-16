@@ -28,14 +28,17 @@ function SalesCardDetails() {
     getOrderAndSetDetail();
   }, []);
 
-  console.log(saleDetails);
-
   return (
-    <div>
+    <div className="flex flex-center mt-10">
       <table>
-        <tbody>
+        <tbody className="flex flex-center">
           {saleDetails.map((sale, index) => (
-            <tr key={ index }>
+            <tr
+              className="flex self-center justify-evenly items-center h-12 mt-3
+             border-[1px] border-[#cccaca] shadow-lg
+              shadow-slate-300 w-[58rem] bg-[#e8e8e7]"
+              key={ index }
+            >
               <td
                 data-testid="seller_order_details__element-order-details-label-order-id"
               >
@@ -55,6 +58,9 @@ function SalesCardDetails() {
               </td>
               <td>
                 <button
+                  className="border-[3px] bg-[#edbe47] w-40
+                  hover:bg-[#a37b15] border-[#cccaca] shadow-md
+                  shadow-slate-300 text-md"
                   type="button"
                   onClick={ changeStatusForPreparing }
                   disabled={ ['Preparando', STATUS, 'Entregue']
@@ -66,6 +72,9 @@ function SalesCardDetails() {
               </td>
               <td>
                 <button
+                  className="border-[3px] bg-[#edbe47] w-40
+                  hover:bg-[#a37b15] border-[#cccaca] shadow-md
+                   shadow-slate-300 text-md"
                   type="button"
                   disabled={ ['Pendente', STATUS, 'Entregue']
                     .includes(sale.status) }
@@ -74,11 +83,6 @@ function SalesCardDetails() {
                 >
                   Saiu para entrega
                 </button>
-              </td>
-              <td
-                data-testid="seller_order_details__element-order-total-price"
-              >
-                { sale.totalPrice.replace('.', ',') }
               </td>
             </tr>
           ))}

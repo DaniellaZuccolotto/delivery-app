@@ -31,7 +31,7 @@ function OrderDetails() {
   }, []);
 
   return (
-    <div div className="flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <NavBar user={ user } history={ history } />
       <h1 className="pt-16 text-xl self-start pl-44">Detalhes do Pedido</h1>
       <section
@@ -64,7 +64,6 @@ function OrderDetails() {
             >
               { orders.status }
             </td>
-
             <button
               className="border-[3px] bg-[#edbe47] w-40 hover:bg-[#a37b15]
               border-[#cccaca] shadow-md shadow-slate-300 text-md"

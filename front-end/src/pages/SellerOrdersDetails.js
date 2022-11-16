@@ -8,8 +8,10 @@ function OrderDetails() {
     <div>
       <NavBarSeller />
       <h1>Detalhe do Pedido</h1>
-      <SalesCardDetails />
-      <SalesProductsCardDetails />
+      <div className="flex flex-col items-center justify-center">
+        <SalesCardDetails />
+        <SalesProductsCardDetails />
+      </div>
     </div>
   );
 }
